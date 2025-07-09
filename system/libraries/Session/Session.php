@@ -67,6 +67,7 @@ class CI_Session {
 	 * @param	array	$params	Configuration parameters
 	 * @return	void
 	 */
+	
 	public function __construct(array $params = array())
 	{
 		// No sessions under CLI
@@ -105,12 +106,13 @@ class CI_Session {
 		$class = new $class($this->_config);
 		if ($class instanceof SessionHandlerInterface)
 		{
-			if (is_php('5.4'))
+			if (is_php('7.4'))
 			{
 				session_set_save_handler($class, TRUE);
 			}
 			else
 			{
+				
 				session_set_save_handler(
 					array($class, 'open'),
 					array($class, 'close'),

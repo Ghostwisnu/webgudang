@@ -172,12 +172,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Input Satuan Barang
+        Input Unit Item
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">Forms</a></li>
-        <li class="active">Satuan Barang</li>
+        <li class="active">Unit Item</li>
       </ol>
     </section>
 
@@ -190,7 +190,7 @@
             <!-- general form elements -->
           <div class="box box-primary" style="width:94%;">
             <div class="box-header with-border">
-              <h3 class="box-title"><i class="fa fa-archive" aria-hidden="true"></i> Tambah Satuan Barang</h3>
+              <h3 class="box-title"><i class="fa fa-archive" aria-hidden="true"></i> Tambah Unit Item</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -212,13 +212,10 @@
             <?php } ?>
 
               <div class="box-body">
+                
                 <div class="form-group" style="display:inline-block;">
-                  <label for="kode_satuan" style="width:87%;margin-left: 12px;">Kode Satuan</label>
-                  <input type="text" name="kode_satuan" style="width: 90%;margin-right: 67px;margin-left: 11px;" class="form-control" id="kode_satuan" placeholder="Kode Satuan">
-                </div>
-                <div class="form-group" style="display:inline-block;">
-                  <label for="nama_satuan" style="width:73%;">Nama Satuan</label>
-                  <input type="text" name="nama_satuan" style="width:90%;margin-right: 67px;" class="form-control" id="nama_satuan" placeholder="Nama Satuan">
+                  <label for="nama_satuan" style="width:73%;">Nama UNIT</label>
+                  <input type="text" name="unit_name" style="width:90%;margin-right: 67px;" class="form-control" id="unit_name" placeholder="Nama Unit">
               </div>
               <div class="form-group" style="display:inline-block;">
                 <button type="reset" class="btn btn-basic" name="btn_reset" style="width:95px;margin-left:20px;"><i class="fa fa-eraser" aria-hidden="true"></i> Reset</button>

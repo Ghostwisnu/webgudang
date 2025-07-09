@@ -399,7 +399,7 @@ class Admin extends CI_Controller{
 
   public function tabel_satuan()
   {
-    $data['list_data'] = $this->M_admin->select('tb_satuan');
+    $data['list_data'] = $this->M_admin->select('tb_unitlist');
     $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
     $this->load->view('admin/tabel/tabel_satuan',$data);
   }
@@ -407,8 +407,8 @@ class Admin extends CI_Controller{
   public function update_satuan()
   {
     $uri = $this->uri->segment(3);
-    $where = array('id_satuan' => $uri);
-    $data['data_satuan'] = $this->M_admin->get_data('tb_satuan',$where);
+    $where = array('id_unit' => $uri);
+    $data['data_satuan'] = $this->M_admin->get_data('tb_unitlist',$where);
     $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
     $this->load->view('admin/form_satuan/form_update',$data);
   }
@@ -416,26 +416,23 @@ class Admin extends CI_Controller{
   public function delete_satuan()
   {
     $uri = $this->uri->segment(3);
-    $where = array('id_satuan' => $uri);
-    $this->M_admin->delete('tb_satuan',$where);
+    $where = array('id_unit' => $uri);
+    $this->M_admin->delete('tb_unitlist',$where);
     redirect(base_url('admin/tabel_satuan'));
   }
 
   public function proses_satuan_insert()
   {
-    $this->form_validation->set_rules('kode_satuan','Kode Satuan','trim|required|max_length[100]');
-    $this->form_validation->set_rules('nama_satuan','Nama Satuan','trim|required|max_length[100]');
+    $this->form_validation->set_rules('unit_name','Nama Unit','trim|required|max_length[100]');
 
     if($this->form_validation->run() ==  TRUE)
     {
-      $kode_satuan = $this->input->post('kode_satuan' ,TRUE);
-      $nama_satuan = $this->input->post('nama_satuan' ,TRUE);
+      $unit_name = $this->input->post('unit_name' ,TRUE);
 
       $data = array(
-            'kode_satuan' => $kode_satuan,
-            'nama_satuan' => $nama_satuan
+            'unit_name' => $unit_name,
       );
-      $this->M_admin->insert('tb_satuan',$data);
+      $this->M_admin->insert('tb_unitlist',$data);
 
       $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Ditambahkan');
       redirect(base_url('admin/form_satuan'));
@@ -446,24 +443,21 @@ class Admin extends CI_Controller{
 
   public function proses_satuan_update()
   {
-    $this->form_validation->set_rules('kode_satuan','Kode Satuan','trim|required|max_length[100]');
-    $this->form_validation->set_rules('nama_satuan','Nama Satuan','trim|required|max_length[100]');
+    $this->form_validation->set_rules('unit_name','Nama Unit','trim|required|max_length[100]');
 
     if($this->form_validation->run() ==  TRUE)
     {
-      $id_satuan   = $this->input->post('id_satuan' ,TRUE);
-      $kode_satuan = $this->input->post('kode_satuan' ,TRUE);
-      $nama_satuan = $this->input->post('nama_satuan' ,TRUE);
+      $id_unit   = $this->input->post('id_unit' ,TRUE);
+      $nama_unit = $this->input->post('unit_name' ,TRUE);
 
       $where = array(
-            'id_satuan' => $id_satuan
+            'id_unit' => $id_unit
       );
 
       $data = array(
-            'kode_satuan' => $kode_satuan,
-            'nama_satuan' => $nama_satuan
+            'unit_name' => $nama_unit
       );
-      $this->M_admin->update('tb_satuan',$data,$where);
+      $this->M_admin->update('tb_unitlist',$data,$where);
 
       $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Di Update');
       redirect(base_url('admin/tabel_satuan'));

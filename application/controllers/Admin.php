@@ -388,7 +388,7 @@ class Admin extends CI_Controller{
 
 
   ####################################
-              // SATUAN
+              // UNIT
   ####################################
 
   public function form_satuan()
@@ -435,7 +435,7 @@ class Admin extends CI_Controller{
       $this->M_admin->insert('tb_unitlist',$data);
 
       $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Ditambahkan');
-      redirect(base_url('admin/form_satuan'));
+      redirect(base_url('admin/tabel_satuan'));
     }else {
       $this->load->view('admin/form_satuan/form_insert');
     }
@@ -467,10 +467,165 @@ class Admin extends CI_Controller{
   }
 
   ####################################
-            // END SATUAN
+            // END UNIT
   ####################################
 
+####################################
+              // ART&COLOR
+  ####################################
 
+  public function form_art()
+  {
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/form_art/form_insert',$data);
+  }
+  public function form_color()
+  {
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/form_color/form_insert',$data);
+  }
+
+  public function tabel_art()
+  {
+    $data['list_data'] = $this->M_admin->select('tb_art');
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/tabel/tabel_art',$data);
+  }
+
+  public function tabel_color()
+  {
+    $data['list_data'] = $this->M_admin->select('tb_color');
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/tabel/tabel_color',$data);
+  }
+
+
+  public function update_art()
+  {
+    $uri = $this->uri->segment(3);
+    $where = array('id_art' => $uri);
+    $data['data_art'] = $this->M_admin->get_data('tb_art',$where);
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/form_art/form_update',$data);
+  }
+
+  public function delete_art()
+  {
+    $uri = $this->uri->segment(3);
+    $where = array('id_art' => $uri);
+    $this->M_admin->delete('tb_art',$where);
+    redirect(base_url('admin/tabel_art'));
+  }
+
+  public function proses_art_insert()
+  {
+    $this->form_validation->set_rules('art_name','Nama Art','trim|required|max_length[100]');
+
+    if($this->form_validation->run() ==  TRUE)
+    {
+      $art_name = $this->input->post('art_name' ,TRUE);
+
+      $data = array(
+            'art_name' => $art_name,
+      );
+      $this->M_admin->insert('tb_art',$data);
+
+      $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Ditambahkan');
+      redirect(base_url('admin/tabel_art'));
+    }else {
+      $this->load->view('admin/form_art/form_insert');
+    }
+  }
+
+  public function proses_art_update()
+  {
+    $this->form_validation->set_rules('art_name','Nama Art','trim|required|max_length[100]');
+
+    if($this->form_validation->run() ==  TRUE)
+    {
+      $id_art   = $this->input->post('id_art' ,TRUE);
+      $art_unit = $this->input->post('art_name' ,TRUE);
+
+      $where = array(
+            'id_art' => $id_art
+      );
+
+      $data = array(
+            'art_name' => $art_unit
+      );
+      $this->M_admin->update('tb_art',$data,$where);
+
+      $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Di Update');
+      redirect(base_url('admin/tabel_art'));
+    }else {
+      $this->load->view('admin/form_art/form_update');
+    }
+  }
+  public function update_color()
+  {
+    $uri = $this->uri->segment(3);
+    $where = array('id_color' => $uri);
+    $data['data_color'] = $this->M_admin->get_data('tb_color',$where);
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/form_color/form_update',$data);
+  }
+
+  public function delete_color()
+  {
+    $uri = $this->uri->segment(3);
+    $where = array('id_color' => $uri);
+    $this->M_admin->delete('tb_color',$where);
+    redirect(base_url('admin/tabel_art_color'));
+  }
+
+  public function proses_color_insert()
+  {
+    $this->form_validation->set_rules('color_name','Nama Color','trim|required|max_length[100]');
+
+    if($this->form_validation->run() ==  TRUE)
+    {
+      $color_name = $this->input->post('color_name' ,TRUE);
+
+      $data = array(
+            'color_name' => $color_name,
+      );
+      $this->M_admin->insert('tb_color',$data);
+
+      $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Ditambahkan');
+      redirect(base_url('admin/form_color'));
+    }else {
+      $this->load->view('admin/form_color/form_insert');
+    }
+  }
+
+  public function proses_color_update()
+  {
+    $this->form_validation->set_rules('color_name','Nama Color','trim|required|max_length[100]');
+
+    if($this->form_validation->run() ==  TRUE)
+    {
+      $id_color   = $this->input->post('id_color' ,TRUE);
+      $color_name = $this->input->post('color_name' ,TRUE);
+
+      $where = array(
+            'id_color' => $id_color
+      );
+
+      $data = array(
+            'color_name' => $color_name
+      );
+      $this->M_admin->update('tb_color',$data,$where);
+
+      $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Di Update');
+      redirect(base_url('admin/tabel_art_color'));
+    }else {
+      $this->load->view('admin/form_color/form_update');
+    }
+  }
+
+  ####################################
+            // END ART&COLOR
+  ####################################
 
   ####################################
               // JENIS ITEM

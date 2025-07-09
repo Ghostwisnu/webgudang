@@ -172,12 +172,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Input ART
+        Input Color
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">Forms</a></li>
-        <li class="active">ART</li>
+        <li class="active">Color</li>
       </ol>
     </section>
 
@@ -195,7 +195,7 @@
             <!-- /.box-header -->
             <!-- form start -->
             <div class="container">
-            <form action="<?=base_url('admin/proses_art_insert')?>" role="form" method="post">
+            <form action="<?=base_url('admin/proses_color_insert')?>" role="form" method="post">
 
               <?php if($this->session->flashdata('msg_berhasil')){ ?>
                 <div class="alert alert-success alert-dismissible" style="width:91%">
@@ -214,8 +214,8 @@
               <div class="box-body">
                 
                 <div class="form-group" style="display:inline-block;">
-                  <label for="nama_satuan" style="width:73%;">Nama ART</label>
-                  <input type="text" name="art_name" style="width:90%;margin-right: 67px;" class="form-control" id="art_name" placeholder="Nama Unit">
+                  <label for="nama_satuan" style="width:73%;">Nama Color</label>
+                  <input type="text" name="color_name" style="width:90%;margin-right: 67px;" class="form-control" id="color_name" placeholder="Nama color">
               </div>
               <div class="form-group" style="display:inline-block;">
                 <button type="reset" class="btn btn-basic" name="btn_reset" style="width:95px;margin-left:20px;"><i class="fa fa-eraser" aria-hidden="true"></i> Reset</button>
@@ -225,7 +225,7 @@
 
               <div class="box-footer" style="width:93%;">
                 <a type="button" class="btn btn-default" style="width:10%;margin-right:26%" onclick="history.back(-1)" name="btn_kembali"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
-                <a type="button" class="btn btn-info" style="width:13%;margin-right:29%" href="<?=base_url('admin/tabel_art_color')?>" name="btn_art"><i class="fa fa-table" aria-hidden="true"></i> Lihat Satuan</a>
+                <a type="button" class="btn btn-info" style="width:13%;margin-right:29%" href="<?=base_url('admin/tabel_art_color')?>" name="btn_art"><i class="fa fa-table" aria-hidden="true"></i> Lihat Art&Color</a>
                 <button type="submit" style="width:20%" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Submit</button>
               </div>
             </form>

@@ -152,7 +152,8 @@
           <ul class="treeview-menu">
             <li><a href="<?= base_url('admin/tabel_barangmasuk')?>"><i class="fa fa-circle-o"></i> Tabel Barang Masuk</a></li>
             <li><a href="<?= base_url('admin/tabel_barangkeluar')?>"><i class="fa fa-circle-o"></i> Tabel Barang Keluar</a></li>
-            <li class="active"><a href="<?= base_url('admin/tabel_satuan')?>"><i class="fa fa-circle-o"></i> Tabel Satuan</a></li>
+            <li class="active"><a href="<?= base_url('admin/tabel_satuan')?>"><i class="fa fa-circle-o"></i> Tabel Unit</a></li>
+            <li><a href="<?= base_url('admin/tabel_art')?>"><i class="fa fa-circle-o"></i> Tabel Art&Color</a></li>
             <li ><a href="<?= base_url('admin/tabel_jenisitem')?>"><i class="fa fa-circle-o"></i> Tabel Jenis Item</a></li>
             <li ><a href="<?= base_url('admin/tabel_po_number')?>"><i class="fa fa-circle-o"></i> Tabel PO</a></li>
           </ul>

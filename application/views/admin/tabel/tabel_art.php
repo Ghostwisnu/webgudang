@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Web Gudang | Art&Color</title>
+  <title>Smart Warehouse | Table Art&Color</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -12,8 +12,12 @@
   <link rel="stylesheet" href="<?php echo base_url()?>assets/web_admin/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="<?php echo base_url()?>assets/web_admin/bower_components/Ionicons/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="<?php echo base_url()?>assets/web_admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url()?>assets/web_admin/dist/css/AdminLTE.min.css">
+
+  <link rel="stylesheet" href="<?php echo base_url()?>assets/sweetalert/dist/sweetalert.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo base_url()?>assets/web_admin/dist/css/skins/_all-skins.min.css">
@@ -26,7 +30,8 @@
   <![endif]-->
 
   <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -75,10 +80,10 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="<?= base_url('admin/profile')?>" class="btn btn-default btn-flat"><i class="fa fa-cogs" aria-hidden="true"></i> Profile</a>
+                  <a href="#" class="btn btn-default btn-flat"><i class="fa fa-cogs" aria-hidden="true"></i> Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="<?= base_url('admin/sigout')?>" class="btn btn-default btn-flat"><i class="fa fa-sign-out" aria-hidden="true"></i> Sign out</a>
+                  <a href="<?= base_url('admin/sigout')?>" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -89,7 +94,6 @@
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
-
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -124,7 +128,7 @@
           </ul> -->
         </li>
 
-        <li class="treeview active">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Forms</span>
             <span class="pull-right-container">
@@ -134,11 +138,11 @@
           <ul class="treeview-menu">
             <li><a href="<?= base_url('admin/form_barangmasuk')?>"><i class="fa fa-circle-o"></i> Tambah Data Barang Masuk</a></li>
             <li><a href="<?= base_url('admin/form_satuan')?>"><i class="fa fa-circle-o"></i> Tambah Satuan Barang</a></li>
-            <li ><a href="<?= base_url('admin/form_jenisitem')?>"><i class="fa fa-circle-o"></i> Tambah Jenis Item</a></li>
-            <li ><a href="<?= base_url('admin/form_po_number')?>"><i class="fa fa-circle-o"></i> Tambah PO</a></li>
+            <li><a href="<?= base_url('admin/form_jenisitem')?>"><i class="fa fa-circle-o"></i> Tambah Jenis Item</a></li>
+            <li><a href="<?= base_url('admin/form_po_number')?>"><i class="fa fa-circle-o"></i> Tambah PO</a></li>
           </ul>
         </li>
-        <li class="treeview ">
+        <li class="treeview active">
           <a href="#">
             <i class="fa fa-table"></i> <span>Tables</span>
             <span class="pull-right-container">
@@ -148,9 +152,11 @@
           <ul class="treeview-menu">
             <li><a href="<?= base_url('admin/tabel_barangmasuk')?>"><i class="fa fa-circle-o"></i> Tabel Barang Masuk</a></li>
             <li><a href="<?= base_url('admin/tabel_barangkeluar')?>"><i class="fa fa-circle-o"></i> Tabel Barang Keluar</a></li>
-            <li><a href="<?= base_url('admin/tabel_satuan')?>"><i class="fa fa-circle-o"></i> Tabel Satuan</a></li>
-            <li><a href="<?= base_url('admin/tabel_jenisitem')?>"><i class="fa fa-circle-o"></i> Tabel Jenis Item</a></li>
-            <li><a href="<?= base_url('admin/tabel_po_number')?>"><i class="fa fa-circle-o"></i> Tabel PO</a></li>
+            <li><a href="<?= base_url('admin/tabel_satuan')?>"><i class="fa fa-circle-o"></i> Tabel Unit</a></li>
+            <li class="active"><a href="<?= base_url('admin/tabel_art')?>"><i class="fa fa-circle-o"></i> Tabel Art</a></li>
+            <li><a href="<?= base_url('admin/tabel_color')?>"><i class="fa fa-circle-o"></i> Tabel color</a></li>
+            <li ><a href="<?= base_url('admin/tabel_jenisitem')?>"><i class="fa fa-circle-o"></i> Tabel Jenis Item</a></li>
+            <li ><a href="<?= base_url('admin/tabel_po_number')?>"><i class="fa fa-circle-o"></i> Tabel PO</a></li>
           </ul>
         </li>
         <li>
@@ -163,6 +169,7 @@
           <a href="<?php echo base_url('admin/users')?>">
          <i class="fa fa-fw fa-users" aria-hidden="true"></i> <span>Users</span></a>
         </li>
+      </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -172,92 +179,75 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Input ART
+        Tabel Art&Color
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Forms</a></li>
-        <li class="active">ART</li>
+        <li><a href="<?=base_url('admin')?>"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li>Tables</li>
+        <li class="active"><a href="<?=base_url('admin/tabel_art_color')?>">Tabel Art&Color</a></li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
       <div class="row">
-        <!-- left column -->
-        <div class="col-md-12">
-          <div class="container">
-            <!-- general form elements -->
-          <div class="box box-primary" style="width:94%;">
-            <div class="box-header with-border">
-              <h3 class="box-title"><i class="fa fa-archive" aria-hidden="true"></i> Tambah ART</h3>
+        <div class="col-xs-12">
+
+          <!-- /.box -->
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title"><i class="fa fa-table" aria-hidden="true"></i> List Art&Color</h3>
             </div>
             <!-- /.box-header -->
-            <!-- form start -->
-            <div class="container">
-            <form action="<?=base_url('admin/proses_art_insert')?>" role="form" method="post">
+            <div class="box-body">
 
               <?php if($this->session->flashdata('msg_berhasil')){ ?>
-                <div class="alert alert-success alert-dismissible" style="width:91%">
+                <div class="alert alert-success alert-dismissible" style="width:100%">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <strong>Success!</strong><br> <?php echo $this->session->flashdata('msg_berhasil');?>
                </div>
               <?php } ?>
 
-              <?php if(validation_errors()){ ?>
-              <div class="alert alert-warning alert-dismissible">
-                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                  <strong>Warning!</strong><br> <?php echo validation_errors(); ?>
-             </div>
-            <?php } ?>
-
-              <div class="box-body">
+              <a href="<?=base_url('admin/form_art')?>" style="margin-bottom:10px;" type="button" class="btn btn-primary" name="tambah_data"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Art</a>
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama Art</th>
+                  <th>Update</th>
+                  <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <?php if(is_array($list_data)){ ?>
+                  <?php $no = 1;?>
+                  <?php foreach($list_data as $dd): ?>
+                    <td><?=$no?></td>
+                    <td><?=$dd->art_name?></td>
+                    <td><a type="button" class="btn btn-info"  href="<?=base_url('admin/update_art/'.$dd->id_art)?>" name="btn_update" style="margin:auto;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                    <td><a type="button" class="btn btn-danger btn-delete"  href="<?=base_url('admin/delete_art/'.$dd->id_art)?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                </tr>
+              <?php $no++; ?>
+              <?php endforeach;?>
+              <?php }else { ?>
+                    <td colspan="7" align="center"><strong>Data Kosong</strong></td>
+              <?php } ?>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>No</th>
+                  <th>Nama Art</th>
+                </tr>
+                </tfoot>
                 
-                <div class="form-group" style="display:inline-block;">
-                  <label for="nama_satuan" style="width:73%;">Nama ART</label>
-                  <input type="text" name="art_name" style="width:90%;margin-right: 67px;" class="form-control" id="art_name" placeholder="Nama Unit">
-              </div>
-              <div class="form-group" style="display:inline-block;">
-                <button type="reset" class="btn btn-basic" name="btn_reset" style="width:95px;margin-left:20px;"><i class="fa fa-eraser" aria-hidden="true"></i> Reset</button>
-              </div>
-
-              <!-- /.box-body -->
-
-              <div class="box-footer" style="width:93%;">
-                <a type="button" class="btn btn-default" style="width:10%;margin-right:26%" onclick="history.back(-1)" name="btn_kembali"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
-                <a type="button" class="btn btn-info" style="width:13%;margin-right:29%" href="<?=base_url('admin/tabel_art_color')?>" name="btn_art"><i class="fa fa-table" aria-hidden="true"></i> Lihat Satuan</a>
-                <button type="submit" style="width:20%" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Submit</button>
-              </div>
-            </form>
+              </table>
+            </div>
+            <!-- /.box-body -->
           </div>
-          </div>
-          <!-- /.box -->
-
-          <!-- Form Element sizes -->
-
-          <!-- /.box -->
 
 
-          <!-- /.box -->
-
-          <!-- Input addon -->
-
-          <!-- /.box -->
-
-        </div>
-        <!--/.col (left) -->
-        <!-- right column -->
-        <!-- <div class="col-md-6">
-          <!-- Horizontal Form -->
-
-          <!-- /.box -->
-          <!-- general form elements disabled -->
-
-          <!-- /.box -->
-
-        </div>
-        </div>
-        <!--/.col (right) -->
+        <!-- /.col -->
       </div>
       <!-- /.row -->
     </section>
@@ -465,18 +455,64 @@
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
-  </div>
-  <!-- ./wrapper -->
+</div>
+<!-- ./wrapper -->
 
-  <!-- jQuery 3 -->
-  <script src="<?php echo base_url()?>assets/web_admin/bower_components/jquery/dist/jquery.min.js"></script>
-  <!-- Bootstrap 3.3.7 -->
-  <script src="<?php echo base_url()?>assets/web_admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <!-- FastClick -->
-  <script src="<?php echo base_url()?>assets/web_admin/bower_components/fastclick/lib/fastclick.js"></script>
-  <!-- AdminLTE App -->
-  <script src="<?php echo base_url()?>assets/web_admin/dist/js/adminlte.min.js"></script>
-  <!-- AdminLTE for demo purposes -->
-  <script src="<?php echo base_url()?>assets/web_admin/dist/js/demo.js"></script>
-  </body>
-  </html>
+<!-- jQuery 3 -->
+<script src="<?php echo base_url()?>assets/web_admin/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="<?php echo base_url()?>assets/sweetalert/dist/sweetalert.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="<?php echo base_url()?>assets/web_admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="<?php echo base_url()?>assets/web_admin/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo base_url()?>assets/web_admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="<?php echo base_url()?>assets/web_admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="<?php echo base_url()?>assets/web_admin/bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="<?php echo base_url()?>assets/web_admin/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="<?php echo base_url()?>assets/web_admin/dist/js/demo.js"></script>
+<!-- page script -->
+<script>
+jQuery(document).ready(function($){
+      $('.btn-delete').on('click',function(){
+          var getLink = $(this).attr('href');
+          swal({
+                  title: 'Delete Data',
+                  text: 'Yakin Ingin Menghapus Data ?',
+                  html: true,
+                  confirmButtonColor: '#d9534f',
+                  showCancelButton: true,
+                  },function(){
+                  window.location.href = getLink
+              });
+          return false;
+      });
+  });
+
+  $(function () {
+    $('#example1').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : false,
+      'info'        : true,
+      'autoWidth'   : false
+
+    })
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  });
+
+
+</script>
+</body>
+</html>

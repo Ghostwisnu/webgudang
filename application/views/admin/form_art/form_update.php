@@ -171,7 +171,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Update Data Barang Masuk
+        Update Art
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -189,12 +189,12 @@
             <!-- general form elements -->
           <div class="box box-primary" style="width:94%;">
             <div class="box-header with-border">
-              <h3 class="box-title"><i class="fa fa-archive" aria-hidden="true"></i> Update Data Barang Masuk</h3>
+              <h3 class="box-title"><i class="fa fa-archive" aria-hidden="true"></i> Update Art</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
             <div class="container">
-            <form action="<?=base_url('admin/proses_satuan_update')?>" role="form" method="post">
+            <form action="<?=base_url('admin/proses_art_update')?>" role="form" method="post">
 
               <?php if(validation_errors()){ ?>
               <div class="alert alert-warning alert-dismissible">
@@ -205,12 +205,12 @@
 
               <div class="box-body">
                 <div class="form-group">
-                  <?php foreach($data_satuan as $d){ ?>
+                  <?php foreach($data_art as $d){ ?>
                     <div class="box-body">
                       <div class="form-group" style="display:inline-block;">
-                        <input type="hidden" name="id_unit" value="<?=$d->id_unit?>">
-                        <label for="unit_name" style="width:87%;margin-left: 12px;">Nama Unit</label>
-                        <input type="text" required name="unit_name" style="width: 90%;margin-right: 67px;margin-left: 11px;" class="form-control" id="unit_name" placeholder="Nama Unit" value="<?=$d->unit_name?>">
+                        <input type="hidden" name="id_art" value="<?=$d->id_art?>">
+                        <label for="art_name" style="width:87%;margin-left: 12px;">Nama Art</label>
+                        <input type="text" required name="art_name" style="width: 90%;margin-right: 67px;margin-left: 11px;" class="form-control" id="art_name" placeholder="Nama art" value="<?=$d->art_name?>">
                       </div>
                     <div class="form-group" style="display:inline-block;">
                       <button type="reset" class="btn btn-basic" name="btn_reset" style="width:95px;margin-left:20px;"><i class="fa fa-eraser" aria-hidden="true"></i> Reset</button>
@@ -220,7 +220,7 @@
 
                     <div class="box-footer" style="width:93%;">
                       <a type="button" class="btn btn-default" style="width:10%;margin-right:26%" onclick="history.back(-1)" name="btn_kembali"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
-                      <a type="button" class="btn btn-info" style="width:13%;margin-right:29%" href="<?=base_url('admin/tabel_satuan')?>" name="btn_listsatuan"><i class="fa fa-table" aria-hidden="true"></i> Lihat Satuan</a>
+                      <a type="button" class="btn btn-info" style="width:13%;margin-right:29%" href="<?=base_url('admin/tabel_art_color')?>" name="btn_art"><i class="fa fa-table" aria-hidden="true"></i> Lihat Satuan</a>
                       <button type="submit" style="width:20%" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Submit</button>
                     </div>
             </form>

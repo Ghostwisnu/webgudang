@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Web Gudang | Edit Satuan</title>
+  <title>Smart Warehouse | PO Number</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -37,7 +38,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>PT AERROSTAR</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -65,7 +66,6 @@
                 <?php foreach($avatar as $a){ ?>
                 <img src="<?php echo base_url('assets/upload/user/img/'.$a->nama_file)?>" class="img-circle" alt="User Image">
                 <?php } ?>
-
                 <p>
                   <?=$this->session->userdata('name')?> - Web Developer
                   <small>Last Login : <?=$this->session->userdata('last_login')?></small>
@@ -125,7 +125,7 @@
           </ul> -->
         </li>
 
-        <li class="treeview active">
+        <li class="treeview ">
           <a href="#">
             <i class="fa fa-table"></i> <span>Tables</span>
             <span class="pull-right-container">
@@ -153,7 +153,6 @@
           <a href="<?php echo base_url('admin/users')?>">
          <i class="fa fa-fw fa-users" aria-hidden="true"></i> <span>Users</span></a>
         </li>
-      </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -163,12 +162,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Update Data Barang Masuk
+        Input PO Number
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">Forms</a></li>
-        <li class="active">General Elements</li>
+        <li class="active">Jenis Item</li>
       </ol>
     </section>
 
@@ -181,12 +180,19 @@
             <!-- general form elements -->
           <div class="box box-primary" style="width:94%;">
             <div class="box-header with-border">
-              <h3 class="box-title"><i class="fa fa-archive" aria-hidden="true"></i> Update Data Barang Masuk</h3>
+              <h3 class="box-title"><i class="fa fa-archive" aria-hidden="true"></i> Tambah Po Number</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
             <div class="container">
-            <form action="<?=base_url('admin/proses_satuan_update')?>" role="form" method="post">
+            <form action="<?=base_url('admin/proses_po_size_insert')?>" role="form" method="post">
+
+              <?php if($this->session->flashdata('msg_berhasil')){ ?>
+                <div class="alert alert-success alert-dismissible" style="width:91%">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong><br> <?php echo $this->session->flashdata('msg_berhasil');?>
+               </div>
+              <?php } ?>
 
               <?php if(validation_errors()){ ?>
               <div class="alert alert-warning alert-dismissible">
@@ -194,50 +200,87 @@
                   <strong>Warning!</strong><br> <?php echo validation_errors(); ?>
              </div>
             <?php } ?>
-
+                <?php foreach($data_po_number as $d){ ?>
               <div class="box-body">
-                <div class="form-group">
-                  <?php foreach($data_po_number as $d){ ?>
-                          <div class="box-body">
-                      <div class="form-group" style="display:inline-block;">
-                        <input type="hidden" name="id_po" value="<?=$d->id_po?>">
-                        <label for="po_number" style="width:87%;margin-left: 0px;">PO number</label>
-                        <input type="text" name="po_number" style="width: 90%;margin-right: 0px;margin-left: px;" class="form-control" id="po_number" value="<?=$d->po_number?>" placeholder="PO Number">
-                      </div>
-                      <div class="form-group" style="display:inline-block;">
-                        <label for="xfd" style="width:73%;">XFD</label>
-                        <input type="date" name="xfd" style="width:90%;margin-right: px;" class="form-control" id="xfd" value="<?=$d->xfd?>" placeholder="XFD">
-                    </div>
-                    <div class="form-group" style="display:inline-block;">
-                        <label for="brand_name" style="width:87%;margin-left: 0px; gap: 10px;">Nama Brand</label>
-                        <select class="form-control" name="brand_name" style="width:110%;margin-right: 18px;gap: 10px" required>
-                          <option value="" selected="<?=$d->brand_name?>"><?=$d->brand_name?></option>
-                          <?php foreach($list_brand as $p){ ?>
-                          <option value="<?=$p->brand_name?>"><?=$p->brand_name?></option>
-                          <?php } ?>
-                        </select>
-                    </div>
-                    <div class="form-group" style="display:inline-block;">
-                        <label for="artcolor_name" style="width:87%;margin-left: 0px; gap: 10px;">Nama Art & Color</label>
-                        <select class="form-control" name="artcolor_name" style="width:110%;margin-right: 18px;gap: 10px" required>
-                          <option value="" selected="<?=$d->artcolor_name?>"><?=$d->artcolor_name?></option>
-                          <?php foreach($list_artcolor as $p){ ?>
-                          <option value="<?=$p->artcolor_name?>"><?=$p->artcolor_name?></option>
-                          <?php } ?>
-                        </select>
-                    </div>
-                    <div class="form-group" style="display:inline-block;">
-                      <button type="reset" class="btn btn-basic" name="btn_reset" style="width:95px;margin-left:20px;"><i class="fa fa-eraser" aria-hidden="true"></i> Reset</button>
-                    </div>
-                    <?php } ?>
-                    <!-- /.box-body -->
+                <div class="form-group" style="display:inline-block;">
+                  <input type="hidden" name="id_po" value="<?=$d->id_po?>">
+                  <label for="po_number" style="width:87%;margin-left: 0px;">PO number</label>
+                  <input type="text" name="po_number" style="width: 90%;margin-right: 0px;margin-left: px;" class="form-control" id="po_number" value="<?=$d->po_number?>" readonly placeholder="PO Number">
+                </div>
+                <div class="form-group" style="display:inline-block;">
+                  <label for="xfd" style="width:73%;">XFD</label>
+                  <input type="date" name="xfd" style="width:90%;margin-right: px;" class="form-control" id="xfd" value="<?=$d->xfd?>" readonly placeholder="XFD">
+              </div>
+              <div class="form-group" style="display:inline-block;">
+                  <label for="brand_name" style="width:87%;margin-left: 0px;">Brand</label>
+                  <input type="text" name="brand_name" style="width: 90%;margin-right: 0px;margin-left: px;" class="form-control" id="brand_name" value="<?=$d->brand_name?>" readonly placeholder="Brand">
+                </div>
+              <div class="form-group" style="display:inline-block;">
+                  <label for="artcolor_name" style="width:87%;margin-left: 0px;">Art & Color</label>
+                  <input type="text" name="artcolor_name" style="width: 90%;margin-right: 0px;margin-left: px;" class="form-control" id="artcolor_name" value="<?=$d->artcolor_name?>" readonly placeholder="Art & Color">
+                </div>
+                <div class="form-group" style="display:inline-block;">
+                  <label for="qty_total" style="width:87%;margin-left: 0px;">QTY Total</label>
+                  <input type="text" name="qty_total" style="width: 90%;margin-right: 0px;margin-left: px;" class="form-control" id="qty_total" value="<?=$d->qty_total?>" readonly placeholder="QTY Total">
+                </div>
+              <div class="form-group" style="display:inline-block;">
+                <button type="reset" class="btn btn-basic" name="btn_reset" style="width:90px;margin-left:110px;"><i class="fa fa-eraser" aria-hidden="true"></i> Reset</button>
+              </div>
+              <?php } ?>
 
-                    <div class="box-footer" style="width:93%;">
-                      <a type="button" class="btn btn-default" style="width:10%;margin-right:26%" onclick="history.back(-1)" name="btn_kembali"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
-                      <a type="button" class="btn btn-info" style="width:13%;margin-right:29%" href="<?=base_url('admin/tabel_satuan')?>" name="btn_listsatuan"><i class="fa fa-table" aria-hidden="true"></i> Lihat Satuan</a>
-                      <button type="submit" style="width:20%" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Submit</button>
-                    </div>
+              <div class="form-group" style="display:inline-block;">
+                  <label for="size_name" style="width:87%;margin-left: 0px; gap: 10px;">Size</label>
+                  <select class="form-control" name="size_name" style="width:110%;margin-right: 18px;gap: 10px" required>
+                    <option value="" selected="">-- Pilih --</option>
+                    <?php foreach($list_size as $p){ ?>
+                    <option value="<?=$p->size_name?>"><?=$p->size_name?></option>
+                    <?php } ?>
+                  </select>
+              </div>
+
+              <!-- /.box-body -->
+
+              <div class="box-footer" style="width:93%;">
+                <a type="button" class="btn btn-default" style="width:10%;margin-right:26%" onclick="history.back(-1)" name="btn_kembali"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
+                <a type="button" class="btn btn-info" style="width:13%;margin-right:29%" href="<?=base_url('admin/tabel_po_number')?>" name="btn_listponumber"><i class="fa fa-table" aria-hidden="true"></i> Lihat PO Number</a>
+                <button type="submit" style="width:20%" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Submit</button>
+              </div>
             </form>
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>No</th>
+                  <th>SIZE</th>
+                  <th>QTY</th>
+                  <th>Update</th>
+                  <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <?php if(is_array($list_size_run)){ ?>
+                  <?php $no = 1;?>
+                  <?php foreach($list_size_run as $dd): ?>
+                    <td><?=$no?></td>
+                    <td><?=$dd->size_name?></td>
+                    <td><?=$dd->size_run?></td>
+                    <td><a type="button" class="btn btn-info"  href="<?=base_url('admin/update_size_run/'.$dd->id_sizerun)?>" name="btn_update" style="margin:auto;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                    <td><a type="button" class="btn btn-danger btn-delete"  href="<?=base_url('admin/delete_size_run/'.$dd->id_sizerun)?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                </tr>
+              <?php $no++; ?>
+              <?php endforeach;?>
+              <?php }else { ?>
+                    <td colspan="7" align="center"><strong>Data Kosong</strong></td>
+              <?php } ?>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>No</th>
+                  <th>SIZE</th>
+                  <th>QTY</th>
+                </tr>
+                </tfoot>
+              </table>
           </div>
           </div>
           <!-- /.box -->
@@ -487,5 +530,8 @@
   <script src="<?php echo base_url()?>assets/web_admin/dist/js/adminlte.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="<?php echo base_url()?>assets/web_admin/dist/js/demo.js"></script>
+  
   </body>
   </html>
+
+

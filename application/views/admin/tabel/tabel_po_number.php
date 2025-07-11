@@ -128,20 +128,6 @@
           </ul> -->
         </li>
 
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-edit"></i> <span>Forms</span>
-            <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="<?= base_url('admin/form_barangmasuk')?>"><i class="fa fa-circle-o"></i> Tambah Data Barang Masuk</a></li>
-            <li><a href="<?= base_url('admin/form_satuan')?>"><i class="fa fa-circle-o"></i> Tambah Satuan Barang</a></li>
-            <li><a href="<?= base_url('admin/form_jenisitem')?>"><i class="fa fa-circle-o"></i> Tambah Jenis Item</a></li>
-            <li><a href="<?= base_url('admin/form_po_number')?>"><i class="fa fa-circle-o"></i> Tambah PO</a></li>
-          </ul>
-        </li>
         <li class="treeview active">
           <a href="#">
             <i class="fa fa-table"></i> <span>Tables</span>
@@ -151,10 +137,13 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="<?= base_url('admin/tabel_barangmasuk')?>"><i class="fa fa-circle-o"></i> Tabel Barang Masuk</a></li>
-            <li><a href="<?= base_url('admin/tabel_barangkeluar')?>"><i class="fa fa-circle-o"></i> Tabel Barang Keluar</a></li>
-            <li><a href="<?= base_url('admin/tabel_satuan')?>"><i class="fa fa-circle-o"></i> Tabel Satuan</a></li>
-            <li ><a href="<?= base_url('admin/tabel_jenisitem')?>"><i class="fa fa-circle-o"></i> Tabel Jenis Item</a></li>
-            <li ><a href="<?= base_url('admin/tabel_po_number')?>"><i class="fa fa-circle-o"></i> Tabel PO</a></li>
+            <li ><a href="<?= base_url('admin/tabel_satuan')?>"><i class="fa fa-circle-o"></i> Tabel Unit</a></li>
+            <li><a href="<?= base_url('admin/tabel_art')?>"><i class="fa fa-circle-o"></i> Tabel Art</a></li>
+            <li><a href="<?= base_url('admin/tabel_color')?>"><i class="fa fa-circle-o"></i> Tabel Color</a></li>
+            <li><a href="<?= base_url('admin/tabel_brand')?>"><i class="fa fa-circle-o"></i> Tabel Brand</a></li>
+            <li><a href="<?= base_url('admin/tabel_art_color')?>"><i class="fa fa-circle-o"></i> Tabel Art & Color</a></li>
+            <li><a href="<?= base_url('admin/tabel_jenisitem')?>"><i class="fa fa-circle-o"></i> Tabel Jenis Item</a></li>
+            <li class="active"><a href="<?= base_url('admin/tabel_po_number')?>"><i class="fa fa-circle-o"></i> Tabel PO</a></li>
           </ul>
         </li>
         <li>
@@ -177,12 +166,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Tabel Satuan
+        Tabel PO
       </h1>
       <ol class="breadcrumb">
         <li><a href="<?=base_url('admin')?>"><i class="fa fa-dashboard"></i> Home</a></li>
         <li>Tables</li>
-        <li class="active"><a href="<?=base_url('admin/tabel_po_number')?>">Tabel PO Number</a></li>
+        <li class="active"><a href="<?=base_url('admin/tabel_po_number')?>">Tabel PO</a></li>
       </ol>
     </section>
 
@@ -194,7 +183,7 @@
           <!-- /.box -->
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title"><i class="fa fa-table" aria-hidden="true"></i> List PO Number</h3>
+              <h3 class="box-title"><i class="fa fa-table" aria-hidden="true"></i> List PO</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -212,10 +201,14 @@
                 <tr>
                   <th>No</th>
                   <th>PO Number</th>
+                  <th>XFD</th>
                   <th>Brand</th>
-                  <th>Art</th>
-                  <th>Color</th>
+                  <th>Art & Color</th>
                   <th>QTY</th>
+                  <th>Tambah Item</th>
+                  <th>Tambah Size</th>
+                  <th>Update</th>
+                  <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -225,12 +218,14 @@
                   <?php foreach($list_data as $dd): ?>
                     <td><?=$no?></td>
                     <td><?=$dd->po_number?></td>
-                    <td><?=$dd->brand?></td>
-                    <td><?=$dd->art?></td>
-                    <td><?=$dd->color?></td>
-                    <td><?=$dd->qty_order?></td>
-                    <td><a type="button" class="btn btn-info"  href="<?=base_url('admin/update_satuan/'.$dd->po_number)?>" name="btn_update" style="margin:auto;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-                    <td><a type="button" class="btn btn-danger btn-delete"  href="<?=base_url('admin/delete_satuan/'.$dd->po_number)?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                    <td><?=$dd->xfd?></td>
+                    <td><?=$dd->brand_name?></td>
+                    <td><?=$dd->artcolor_name?></td>
+                    <td><?=$dd->qty_total?></td>
+                    <td><a type="button" class="btn btn-info"  href="<?=base_url('admin/add_po_item/'.$dd->id_po)?>" name="btn_add" style="margin:auto;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                    <td><a type="button" class="btn btn-info"  href="<?=base_url('admin/add_po_size/'.$dd->id_po)?>" name="btn_add" style="margin:auto;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                    <td><a type="button" class="btn btn-info"  href="<?=base_url('admin/update_po_number/'.$dd->id_po)?>" name="btn_update" style="margin:auto;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                    <td><a type="button" class="btn btn-danger btn-delete"  href="<?=base_url('admin/delete_po_number/'.$dd->id_po)?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                 </tr>
               <?php $no++; ?>
               <?php endforeach;?>
@@ -241,8 +236,11 @@
                 <tfoot>
                 <tr>
                   <th>No</th>
-                  <th>Kode Satuan</th>
-                  <th>Nama Satuan</th>
+                  <th>PO Number</th>
+                  <th>XFD</th>
+                  <th>Brand</th>
+                  <th>Art & Color</th>
+                  <th>QTY</th>
                 </tr>
                 </tfoot>
               </table>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Web Gudang | Edit Satuan</title>
+  <title>Web Gudang | Art&Color</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -37,7 +37,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>PT AERROSTAR</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -65,7 +65,6 @@
                 <?php foreach($avatar as $a){ ?>
                 <img src="<?php echo base_url('assets/upload/user/img/'.$a->nama_file)?>" class="img-circle" alt="User Image">
                 <?php } ?>
-
                 <p>
                   <?=$this->session->userdata('name')?> - Web Developer
                   <small>Last Login : <?=$this->session->userdata('last_login')?></small>
@@ -125,7 +124,7 @@
           </ul> -->
         </li>
 
-        <li class="treeview active">
+        <li class="treeview ">
           <a href="#">
             <i class="fa fa-table"></i> <span>Tables</span>
             <span class="pull-right-container">
@@ -134,13 +133,13 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="<?= base_url('admin/tabel_barangmasuk')?>"><i class="fa fa-circle-o"></i> Tabel Barang Masuk</a></li>
-            <li ><a href="<?= base_url('admin/tabel_satuan')?>"><i class="fa fa-circle-o"></i> Tabel Unit</a></li>
+            <li><a href="<?= base_url('admin/tabel_satuan')?>"><i class="fa fa-circle-o"></i> Tabel Unit</a></li>
             <li><a href="<?= base_url('admin/tabel_art')?>"><i class="fa fa-circle-o"></i> Tabel Art</a></li>
-            <li><a href="<?= base_url('admin/tabel_color')?>"><i class="fa fa-circle-o"></i> Tabel Color</a></li>
+            <li class="active"><a href="<?= base_url('admin/tabel_color')?>"><i class="fa fa-circle-o"></i> Tabel color</a></li>
             <li><a href="<?= base_url('admin/tabel_brand')?>"><i class="fa fa-circle-o"></i> Tabel Brand</a></li>
             <li><a href="<?= base_url('admin/tabel_art_color')?>"><i class="fa fa-circle-o"></i> Tabel Art & Color</a></li>
-            <li><a href="<?= base_url('admin/tabel_jenisitem')?>"><i class="fa fa-circle-o"></i> Tabel Jenis Item</a></li>
-            <li class="active"><a href="<?= base_url('admin/tabel_po_number')?>"><i class="fa fa-circle-o"></i> Tabel PO</a></li>
+            <li ><a href="<?= base_url('admin/tabel_jenisitem')?>"><i class="fa fa-circle-o"></i> Tabel Jenis Item</a></li>
+            <li><a href="<?= base_url('admin/tabel_po_number')?>"><i class="fa fa-circle-o"></i> Tabel PO</a></li>
           </ul>
         </li>
         <li>
@@ -153,7 +152,6 @@
           <a href="<?php echo base_url('admin/users')?>">
          <i class="fa fa-fw fa-users" aria-hidden="true"></i> <span>Users</span></a>
         </li>
-      </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -163,12 +161,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Update Data Barang Masuk
+        Input Color
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">Forms</a></li>
-        <li class="active">General Elements</li>
+        <li class="active">Color</li>
       </ol>
     </section>
 
@@ -181,12 +179,19 @@
             <!-- general form elements -->
           <div class="box box-primary" style="width:94%;">
             <div class="box-header with-border">
-              <h3 class="box-title"><i class="fa fa-archive" aria-hidden="true"></i> Update Data Barang Masuk</h3>
+              <h3 class="box-title"><i class="fa fa-archive" aria-hidden="true"></i> Tambah ART</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
             <div class="container">
-            <form action="<?=base_url('admin/proses_satuan_update')?>" role="form" method="post">
+            <form action="<?=base_url('admin/proses_color_insert')?>" role="form" method="post">
+
+              <?php if($this->session->flashdata('msg_berhasil')){ ?>
+                <div class="alert alert-success alert-dismissible" style="width:91%">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong><br> <?php echo $this->session->flashdata('msg_berhasil');?>
+               </div>
+              <?php } ?>
 
               <?php if(validation_errors()){ ?>
               <div class="alert alert-warning alert-dismissible">
@@ -196,47 +201,22 @@
             <?php } ?>
 
               <div class="box-body">
-                <div class="form-group">
-                  <?php foreach($data_po_number as $d){ ?>
-                          <div class="box-body">
-                      <div class="form-group" style="display:inline-block;">
-                        <input type="hidden" name="id_po" value="<?=$d->id_po?>">
-                        <label for="po_number" style="width:87%;margin-left: 0px;">PO number</label>
-                        <input type="text" name="po_number" style="width: 90%;margin-right: 0px;margin-left: px;" class="form-control" id="po_number" value="<?=$d->po_number?>" placeholder="PO Number">
-                      </div>
-                      <div class="form-group" style="display:inline-block;">
-                        <label for="xfd" style="width:73%;">XFD</label>
-                        <input type="date" name="xfd" style="width:90%;margin-right: px;" class="form-control" id="xfd" value="<?=$d->xfd?>" placeholder="XFD">
-                    </div>
-                    <div class="form-group" style="display:inline-block;">
-                        <label for="brand_name" style="width:87%;margin-left: 0px; gap: 10px;">Nama Brand</label>
-                        <select class="form-control" name="brand_name" style="width:110%;margin-right: 18px;gap: 10px" required>
-                          <option value="" selected="<?=$d->brand_name?>"><?=$d->brand_name?></option>
-                          <?php foreach($list_brand as $p){ ?>
-                          <option value="<?=$p->brand_name?>"><?=$p->brand_name?></option>
-                          <?php } ?>
-                        </select>
-                    </div>
-                    <div class="form-group" style="display:inline-block;">
-                        <label for="artcolor_name" style="width:87%;margin-left: 0px; gap: 10px;">Nama Art & Color</label>
-                        <select class="form-control" name="artcolor_name" style="width:110%;margin-right: 18px;gap: 10px" required>
-                          <option value="" selected="<?=$d->artcolor_name?>"><?=$d->artcolor_name?></option>
-                          <?php foreach($list_artcolor as $p){ ?>
-                          <option value="<?=$p->artcolor_name?>"><?=$p->artcolor_name?></option>
-                          <?php } ?>
-                        </select>
-                    </div>
-                    <div class="form-group" style="display:inline-block;">
-                      <button type="reset" class="btn btn-basic" name="btn_reset" style="width:95px;margin-left:20px;"><i class="fa fa-eraser" aria-hidden="true"></i> Reset</button>
-                    </div>
-                    <?php } ?>
-                    <!-- /.box-body -->
+                
+                <div class="form-group" style="display:inline-block;">
+                  <label for="nama_satuan" style="width:73%;">Nama Color</label>
+                  <input type="text" name="color_name" style="width:90%;margin-right: 67px;" class="form-control" id="color_name" placeholder="Nama color">
+              </div>
+              <div class="form-group" style="display:inline-block;">
+                <button type="reset" class="btn btn-basic" name="btn_reset" style="width:95px;margin-left:20px;"><i class="fa fa-eraser" aria-hidden="true"></i> Reset</button>
+              </div>
 
-                    <div class="box-footer" style="width:93%;">
-                      <a type="button" class="btn btn-default" style="width:10%;margin-right:26%" onclick="history.back(-1)" name="btn_kembali"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
-                      <a type="button" class="btn btn-info" style="width:13%;margin-right:29%" href="<?=base_url('admin/tabel_satuan')?>" name="btn_listsatuan"><i class="fa fa-table" aria-hidden="true"></i> Lihat Satuan</a>
-                      <button type="submit" style="width:20%" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Submit</button>
-                    </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer" style="width:93%;">
+                <a type="button" class="btn btn-default" style="width:10%;margin-right:26%" onclick="history.back(-1)" name="btn_kembali"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
+                <a type="button" class="btn btn-info" style="width:13%;margin-right:29%" href="<?=base_url('admin/tabel_art_color')?>" name="btn_art"><i class="fa fa-table" aria-hidden="true"></i> Lihat Art&Color</a>
+                <button type="submit" style="width:20%" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Submit</button>
+              </div>
             </form>
           </div>
           </div>

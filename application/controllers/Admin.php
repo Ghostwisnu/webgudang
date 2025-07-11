@@ -263,13 +263,8 @@ class Admin extends CI_Controller{
 
   public function form_barangmasuk()
   {
-    $data['list_po_number'] = $this->M_admin->select('tb_po_number');
-    $data['list_jenisitem'] = $this->M_admin->select('tb_jenis_item');
-    $data['list_satuan'] = $this->M_admin->select('tb_satuan');
-    $data['list_art'] = $this->M_admin->select('tb_po_number');
-    $data['list_color'] = $this->M_admin->select('tb_po_number');
-    $data['list_brand'] = $this->M_admin->select('tb_po_number');
-    $data['list_qty_order'] = $this->M_admin->select('tb_po_number');
+    $data['list_artcolor'] = $this->M_admin->select('tb_art_color');
+    $data['list_item'] = $this->M_admin->select('tb_itemlist');
     $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
     $this->load->view('admin/form_barangmasuk/form_insert',$data);
   }
@@ -277,26 +272,26 @@ class Admin extends CI_Controller{
   public function tabel_barangmasuk()
   {
     $data = array(
-              'list_data' => $this->M_admin->select('tb_barang_masuk'),
+              'list_data' => $this->M_admin->select('tb_listcons'),
               'avatar'    => $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'))
             );
     $this->load->view('admin/tabel/tabel_barangmasuk',$data);
   }
 
-  public function update_barang($id_transaksi)
+  public function update_barang($id_cons)
   {
-    $where = array('id_transaksi' => $id_transaksi);
-    $data['data_barang_update'] = $this->M_admin->get_data('tb_barang_masuk',$where);
-    $data['list_jenisitem'] = $this->M_admin->select('tb_jenis_item');
-    $data['list_satuan'] = $this->M_admin->select('tb_satuan');
+    $where = array('id_cons' => $id_cons);
+    $data['data_barang_update'] = $this->M_admin->get_data('tb_listcons',$where);
+    $data['list_item'] = $this->M_admin->select('tb_itemlist');
+    $data['list_artcolor'] = $this->M_admin->select('tb_art_color');
     $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
     $this->load->view('admin/form_barangmasuk/form_update',$data);
   }
 
-  public function delete_barang($id_transaksi)
+  public function delete_barang($id_cons)
   {
-    $where = array('id_transaksi' => $id_transaksi);
-    $this->M_admin->delete('tb_barang_masuk',$where);
+    $where = array('id_cons' => $id_cons);
+    $this->M_admin->delete('tb_listcons',$where);
     redirect(base_url('admin/tabel_barangmasuk'));
   }
 
@@ -304,44 +299,28 @@ class Admin extends CI_Controller{
 
   public function proses_databarang_masuk_insert()
   {
-    $this->form_validation->set_rules('lokasi','Lokasi','required');
-    $this->form_validation->set_rules('kode_barang','Kode Material','required');
-    $this->form_validation->set_rules('nama_barang','Nama Barang','required');
-    $this->form_validation->set_rules('jumlah','Jumlah','required');
+    $this->form_validation->set_rules('artcolor_name','Art Color','required');
+    $this->form_validation->set_rules('item_name','Nama Item','required');
+    $this->form_validation->set_rules('unit_name','Nama Unit','required');
+    $this->form_validation->set_rules('cons_rate','Cons','required');
 
     if($this->form_validation->run() == TRUE)
     {
-      $id_transaksi = $this->input->post('id_transaksi',TRUE);
-      $tanggal      = $this->input->post('tanggal',TRUE);
-      $lokasi       = $this->input->post('lokasi',TRUE);
-      $brand       = $this->input->post('brand',TRUE);
-      $po_number = $this->input->post('po_number',TRUE);
-      $art      = $this->input->post('art',TRUE);
-      $color       = $this->input->post('color',TRUE);
-      $jenis_item       = $this->input->post('jenis_item',TRUE);
-      $kode_barang  = $this->input->post('kode_barang',TRUE);
-      $nama_barang  = $this->input->post('nama_barang',TRUE);
-      $satuan       = $this->input->post('satuan',TRUE);
-      $jumlah       = $this->input->post('jumlah',TRUE);
+      $artcolor_name = $this->input->post('artcolor_name',TRUE);
+      $item_name      = $this->input->post('item_name',TRUE);
+      $unit_name       = $this->input->post('unit_name',TRUE);
+      $cons_rate       = $this->input->post('cons_rate',TRUE);
 
       $data = array(
-            'id_transaksi' => $id_transaksi,
-            'tanggal'      => $tanggal,
-            'lokasi'       => $lokasi,
-            'brand' => $brand,
-            'po_number' => $po_number,
-            'art'      => $art,
-            'color'       => $color,
-            'jenis_item'       => $jenis_item,
-            'kode_barang'  => $kode_barang,
-            'nama_barang'  => $nama_barang,
-            'satuan'       => $satuan,
-            'jumlah'       => $jumlah
+            'artcolor_name' => $artcolor_name,
+            'item_name'      => $item_name,
+            'unit_name'       => $unit_name,
+            'cons_rate'       => $cons_rate
       );
-      $this->M_admin->insert('tb_barang_masuk',$data);
+      $this->M_admin->insert('tb_listcons',$data);
 
       $this->session->set_flashdata('msg_berhasil','Data Barang Berhasil Ditambahkan');
-      redirect(base_url('admin/form_barangmasuk'));
+      redirect(base_url('admin/tabel_barangmasuk'));
     }else {
       $data['list_satuan'] = $this->M_admin->select('tb_satuan');
       $this->load->view('admin/form_barangmasuk/form_insert',$data);
@@ -350,32 +329,29 @@ class Admin extends CI_Controller{
 
   public function proses_databarang_masuk_update()
   {
-    $this->form_validation->set_rules('lokasi','Lokasi','required');
-    $this->form_validation->set_rules('kode_barang','Kode Barang','required');
-    $this->form_validation->set_rules('nama_barang','Nama Barang','required');
-    $this->form_validation->set_rules('jumlah','Jumlah','required');
+    $this->form_validation->set_rules('artcolor_name','Art Color','required');
+    $this->form_validation->set_rules('item_name','Nama Item','required');
+    $this->form_validation->set_rules('unit_name','Nama Unit','required');
+    $this->form_validation->set_rules('cons_rate','Cons','required');
+
 
     if($this->form_validation->run() == TRUE)
     {
-      $id_transaksi = $this->input->post('id_transaksi',TRUE);
-      $tanggal      = $this->input->post('tanggal',TRUE);
-      $lokasi       = $this->input->post('lokasi',TRUE);
-      $kode_barang  = $this->input->post('kode_barang',TRUE);
-      $nama_barang  = $this->input->post('nama_barang',TRUE);
-      $satuan       = $this->input->post('satuan',TRUE);
-      $jumlah       = $this->input->post('jumlah',TRUE);
+      $id_listcons = $this->input->post('id_listcons',TRUE);
+      $artcolor_name = $this->input->post('artcolor_name',TRUE);
+      $item_name      = $this->input->post('item_name',TRUE);
+      $unit_name       = $this->input->post('unit_name',TRUE);
+      $cons_rate       = $this->input->post('cons_rate',TRUE);
 
-      $where = array('id_transaksi' => $id_transaksi);
+      $where = array('id_listcons' => $id_listcons);
       $data = array(
-            'id_transaksi' => $id_transaksi,
-            'tanggal'      => $tanggal,
-            'lokasi'       => $lokasi,
-            'kode_barang'  => $kode_barang,
-            'nama_barang'  => $nama_barang,
-            'satuan'       => $satuan,
-            'jumlah'       => $jumlah
+            'id_listcons' => $id_listcons,
+            'artcolor_name' => $artcolor_name,
+            'item_name'      => $item_name,
+            'unit_name'       => $unit_name,
+            'cons_rate'       => $cons_rate
       );
-      $this->M_admin->update('tb_barang_masuk',$data,$where);
+      $this->M_admin->update('tb_listcons',$data,$where);
       $this->session->set_flashdata('msg_berhasil','Data Barang Berhasil Diupdate');
       redirect(base_url('admin/tabel_barangmasuk'));
     }else{
@@ -386,9 +362,184 @@ class Admin extends CI_Controller{
       // END DATA BARANG MASUK
   ####################################
 
+  ####################################
+        // DATA ART & COLOR
+  ####################################
+
+  public function form_art_color()
+  {
+    $data['list_art'] = $this->M_admin->select('tb_art');
+    $data['list_color'] = $this->M_admin->select('tb_color');
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/form_art_color/form_insert',$data);
+  }
+
+  public function tabel_art_color()
+  {
+    $data = array(
+              'list_data' => $this->M_admin->select('tb_art_color'),
+              'avatar'    => $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'))
+            );
+    $this->load->view('admin/tabel/tabel_art_color',$data);
+  }
+
+  public function update_art_color($id_artcolor)
+  {
+    $where = array('id_artcolor' => $id_artcolor);
+    $data['data_artcolor_update'] = $this->M_admin->get_data('tb_art_color',$where);
+    $data['list_art'] = $this->M_admin->select('tb_art');
+    $data['list_color'] = $this->M_admin->select('tb_color');
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/form_art_color/form_update',$data);
+  }
+
+  public function delete_art_color($id_artcolor)
+  {
+    $where = array('id_artcolor' => $id_artcolor);
+    $this->M_admin->delete('tb_art_color',$where);
+    redirect(base_url('admin/tabel_art_color'));
+  }
+
+  public function proses_artcolor_masuk_insert()
+  {
+    $this->form_validation->set_rules('art_name','Nama Art','required');
+    $this->form_validation->set_rules('color_name','Nama Color','required');
+
+    if($this->form_validation->run() == TRUE)
+    {
+      $art      = $this->input->post('art_name',TRUE);
+      $color      = $this->input->post('color_name',TRUE);       
+      $art_color = $art." ".$color;       
+
+      $data = array(
+            'art_name' => $art,
+            'color_name'       => $color,
+            'artcolor_name'       => $art_color
+      );
+      $this->M_admin->insert('tb_art_color',$data);
+
+      $this->session->set_flashdata('msg_berhasil','Data Barang Berhasil Ditambahkan');
+      redirect(base_url('admin/tabel_art_color'));
+    }else {
+      $data['list_data'] = $this->M_admin->select('tb_art_color');
+      $this->load->view('admin/form_art_color/form_insert',$data);
+    }
+  }
+
+  public function proses_artcolor_masuk_update()
+  {
+    $this->form_validation->set_rules('art_name','Nama Art','required');
+    $this->form_validation->set_rules('color_name','Nama Color','required');
+
+    if($this->form_validation->run() == TRUE)
+    {
+      $id_artcolor      = $this->input->post('id_artcolor',TRUE);
+      $art      = $this->input->post('art_name',TRUE);
+      $color      = $this->input->post('color_name',TRUE);       
+      $art_color = $art." ".$color;       
+
+      $where = array('id_artcolor' => $id_artcolor);
+      $data = array(
+            'art_name' => $art,
+            'color_name'       => $color,
+            'artcolor_name'       => $art_color
+      );
+      $this->M_admin->update('tb_art_color',$data,$where);
+      $this->session->set_flashdata('msg_berhasil','Data Barang Berhasil Diupdate');
+      redirect(base_url('admin/tabel_art_color'));
+    }else{
+      $this->load->view('admin/form_art_color/form_update');
+    }
+  }
+  ####################################
+      // END DATA ART & COLOR
+  ####################################
 
   ####################################
-              // SATUAN
+              // SIZE
+  ####################################
+
+  public function form_size()
+  {
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/form_size/form_insert',$data);
+  }
+
+  public function tabel_size()
+  {
+    $data['list_data'] = $this->M_admin->select('tb_size');
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/tabel/tabel_size',$data);
+  }
+
+  public function update_size()
+  {
+    $uri = $this->uri->segment(3);
+    $where = array('id_size' => $uri);
+    $data['data_size'] = $this->M_admin->get_data('tb_size',$where);
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/form_size/form_update',$data);
+  }
+
+  public function delete_size()
+  {
+    $uri = $this->uri->segment(3);
+    $where = array('id_size' => $uri);
+    $this->M_admin->delete('tb_size',$where);
+    redirect(base_url('admin/tabel_size'));
+  }
+
+  public function proses_size_insert()
+  {
+    $this->form_validation->set_rules('size_name','Nama Size','trim|required|max_length[100]');
+
+    if($this->form_validation->run() ==  TRUE)
+    {
+      $size_name = $this->input->post('size_name' ,TRUE);
+
+      $data = array(
+            'size_name' => $size_name,
+      );
+      $this->M_admin->insert('tb_size',$data);
+
+      $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Ditambahkan');
+      redirect(base_url('admin/tabel_size'));
+    }else {
+      $this->load->view('admin/form_size/form_insert');
+    }
+  }
+
+  public function proses_size_update()
+  {
+    $this->form_validation->set_rules('size_name','Nama Unit','trim|required|max_length[100]');
+
+    if($this->form_validation->run() ==  TRUE)
+    {
+      $id_size   = $this->input->post('id_size' ,TRUE);
+      $nama_size = $this->input->post('size_name' ,TRUE);
+
+      $where = array(
+            'id_size' => $id_size
+      );
+
+      $data = array(
+            'size_name' => $nama_size
+      );
+      $this->M_admin->update('tb_size',$data,$where);
+
+      $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Di Update');
+      redirect(base_url('admin/tabel_size'));
+    }else {
+      $this->load->view('admin/form_size/form_update');
+    }
+  }
+
+  ####################################
+            // END UNIT
+  ####################################
+
+  ####################################
+              // UNIT
   ####################################
 
   public function form_satuan()
@@ -435,7 +586,7 @@ class Admin extends CI_Controller{
       $this->M_admin->insert('tb_unitlist',$data);
 
       $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Ditambahkan');
-      redirect(base_url('admin/form_satuan'));
+      redirect(base_url('admin/tabel_satuan'));
     }else {
       $this->load->view('admin/form_satuan/form_insert');
     }
@@ -467,10 +618,165 @@ class Admin extends CI_Controller{
   }
 
   ####################################
-            // END SATUAN
+            // END UNIT
   ####################################
 
+####################################
+              // ART&COLOR
+  ####################################
 
+  public function form_art()
+  {
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/form_art/form_insert',$data);
+  }
+  public function form_color()
+  {
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/form_color/form_insert',$data);
+  }
+
+  public function tabel_art()
+  {
+    $data['list_data'] = $this->M_admin->select('tb_art');
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/tabel/tabel_art',$data);
+  }
+
+  public function tabel_color()
+  {
+    $data['list_data'] = $this->M_admin->select('tb_color');
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/tabel/tabel_color',$data);
+  }
+
+
+  public function update_art()
+  {
+    $uri = $this->uri->segment(3);
+    $where = array('id_art' => $uri);
+    $data['data_art'] = $this->M_admin->get_data('tb_art',$where);
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/form_art/form_update',$data);
+  }
+
+  public function delete_art()
+  {
+    $uri = $this->uri->segment(3);
+    $where = array('id_art' => $uri);
+    $this->M_admin->delete('tb_art',$where);
+    redirect(base_url('admin/tabel_art'));
+  }
+
+  public function proses_art_insert()
+  {
+    $this->form_validation->set_rules('art_name','Nama Art','trim|required|max_length[100]');
+
+    if($this->form_validation->run() ==  TRUE)
+    {
+      $art_name = $this->input->post('art_name' ,TRUE);
+
+      $data = array(
+            'art_name' => $art_name,
+      );
+      $this->M_admin->insert('tb_art',$data);
+
+      $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Ditambahkan');
+      redirect(base_url('admin/tabel_art'));
+    }else {
+      $this->load->view('admin/form_art/form_insert');
+    }
+  }
+
+  public function proses_art_update()
+  {
+    $this->form_validation->set_rules('art_name','Nama Art','trim|required|max_length[100]');
+
+    if($this->form_validation->run() ==  TRUE)
+    {
+      $id_art   = $this->input->post('id_art' ,TRUE);
+      $art_unit = $this->input->post('art_name' ,TRUE);
+
+      $where = array(
+            'id_art' => $id_art
+      );
+
+      $data = array(
+            'art_name' => $art_unit
+      );
+      $this->M_admin->update('tb_art',$data,$where);
+
+      $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Di Update');
+      redirect(base_url('admin/tabel_art'));
+    }else {
+      $this->load->view('admin/form_art/form_update');
+    }
+  }
+  public function update_color()
+  {
+    $uri = $this->uri->segment(3);
+    $where = array('id_color' => $uri);
+    $data['data_color'] = $this->M_admin->get_data('tb_color',$where);
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/form_color/form_update',$data);
+  }
+
+  public function delete_color()
+  {
+    $uri = $this->uri->segment(3);
+    $where = array('id_color' => $uri);
+    $this->M_admin->delete('tb_color',$where);
+    redirect(base_url('admin/tabel_art_color'));
+  }
+
+  public function proses_color_insert()
+  {
+    $this->form_validation->set_rules('color_name','Nama Color','trim|required|max_length[100]');
+
+    if($this->form_validation->run() ==  TRUE)
+    {
+      $color_name = $this->input->post('color_name' ,TRUE);
+
+      $data = array(
+            'color_name' => $color_name,
+      );
+      $this->M_admin->insert('tb_color',$data);
+
+      $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Ditambahkan');
+      redirect(base_url('admin/form_color'));
+    }else {
+      $this->load->view('admin/form_color/form_insert');
+    }
+  }
+
+  public function proses_color_update()
+  {
+    $this->form_validation->set_rules('color_name','Nama Color','trim|required|max_length[100]');
+
+    if($this->form_validation->run() ==  TRUE)
+    {
+      $id_color   = $this->input->post('id_color' ,TRUE);
+      $color_name = $this->input->post('color_name' ,TRUE);
+
+      $where = array(
+            'id_color' => $id_color
+      );
+
+      $data = array(
+            'color_name' => $color_name
+      );
+      $this->M_admin->update('tb_color',$data,$where);
+
+      $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Di Update');
+      redirect(base_url('admin/tabel_art_color'));
+    }else {
+      $this->load->view('admin/form_color/form_update');
+    }
+  }
+
+  ####################################
+            // END ART&COLOR
+  ####################################
 
   ####################################
               // JENIS ITEM
@@ -478,13 +784,14 @@ class Admin extends CI_Controller{
 
   public function form_jenisitem()
   {
+    $data['list_unit'] = $this->M_admin->select('tb_unitlist');
     $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
     $this->load->view('admin/form_jenisitem/form_insert',$data);
   }
 
   public function tabel_jenisitem()
   {
-    $data['list_data'] = $this->M_admin->select('tb_jenis_item');
+    $data['list_data'] = $this->M_admin->select('tb_itemlist');
     $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
     $this->load->view('admin/tabel/tabel_jenisitem',$data);
   }
@@ -492,8 +799,9 @@ class Admin extends CI_Controller{
   public function update_jenisitem()
   {
     $uri = $this->uri->segment(3);
-    $where = array('id_item' => $uri);
-    $data['data_jenisitem'] = $this->M_admin->get_data('tb_item',$where);
+    $where = array('id_itemlist' => $uri);
+    $data['data_jenisitem'] = $this->M_admin->get_data('tb_itemlist',$where);
+    $data['list_unit'] = $this->M_admin->select('tb_unitlist');
     $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
     $this->load->view('admin/form_jenisitem/form_update',$data);
   }
@@ -501,29 +809,29 @@ class Admin extends CI_Controller{
   public function delete_jenisitem()
   {
     $uri = $this->uri->segment(3);
-    $where = array('id_item' => $uri);
-    $this->M_admin->delete('tb_jenis_item',$where);
+    $where = array('id_itemlist' => $uri);
+    $this->M_admin->delete('tb_itemlist',$where);
     redirect(base_url('admin/tabel_jenisitem'));
   }
 
   public function proses_jenisitem_insert()
   {
-    $this->form_validation->set_rules('kode_item','Kode Jenis Item','trim|required|max_length[100]');
-    $this->form_validation->set_rules('jenis_item','Nama Item','trim|required|max_length[100]');
+    $this->form_validation->set_rules('item_name','Nama Jenis Item','trim|required|max_length[100]');
+    $this->form_validation->set_rules('unit_name','Nama Unit','trim|required|max_length[100]');
 
     if($this->form_validation->run() ==  TRUE)
     {
-      $kode_item = $this->input->post('kode_item' ,TRUE);
-      $jenis_item = $this->input->post('jenis_item' ,TRUE);
+      $item_name = $this->input->post('item_name' ,TRUE);
+      $unit_name = $this->input->post('unit_name' ,TRUE);
 
       $data = array(
-            'kode_item' => $kode_item,
-            'jenis_item' => $jenis_item
+            'item_name' => $item_name,
+            'unit_name' => $unit_name
       );
-      $this->M_admin->insert('tb_jenis_item',$data);
+      $this->M_admin->insert('tb_itemlist',$data);
 
       $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Ditambahkan');
-      redirect(base_url('admin/form_jenisitem'));
+      redirect(base_url('admin/tabel_jenisitem'));
     }else {
       $this->load->view('admin/form_jenisitem/form_insert');
     }
@@ -531,24 +839,24 @@ class Admin extends CI_Controller{
 
   public function proses_jenisitem_update()
   {
-    $this->form_validation->set_rules('kode_item','Kode Jenis Item','trim|required|max_length[100]');
-    $this->form_validation->set_rules('jenis_item','Jenis Item','trim|required|max_length[100]');
+    $this->form_validation->set_rules('item_name','Nama Jenis Item','trim|required|max_length[100]');
+    $this->form_validation->set_rules('unit_name','Nama Unit','trim|required|max_length[100]');
 
     if($this->form_validation->run() ==  TRUE)
     {
-      $id_satuan   = $this->input->post('id_satuan' ,TRUE);
-      $kode_item = $this->input->post('kode_item' ,TRUE);
-      $jenis_item = $this->input->post('jenis_item' ,TRUE);
+      $id_itemlist   = $this->input->post('id_itemlist' ,TRUE);
+      $item_name = $this->input->post('item_name' ,TRUE);
+      $unit_name = $this->input->post('unit_name' ,TRUE);
 
       $where = array(
             'id_item' => $id_item
       );
 
       $data = array(
-            'kode_item' => $kode_item,
-            'jenis_item' => $jenis_item
+            'item_name' => $item_name,
+            'unit_name' => $unit_name
       );
-      $this->M_admin->update('tb_jenis_item',$data,$where);
+      $this->M_admin->update('tb_itemlist',$data,$where);
 
       $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Di Update');
       redirect(base_url('admin/tabel_jenisitem'));
@@ -628,20 +936,6 @@ class Admin extends CI_Controller{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   ####################################
               // BRAND
   ####################################
@@ -671,29 +965,26 @@ class Admin extends CI_Controller{
   public function delete_brand()
   {
     $uri = $this->uri->segment(3);
-    $where = array('id_item' => $uri);
+    $where = array('id_brand' => $uri);
     $this->M_admin->delete('tb_brand',$where);
     redirect(base_url('admin/tabel_brand'));
   }
 
   public function proses_brand_insert()
   {
-    $this->form_validation->set_rules('kode_brand','Kode Brand','trim|required|max_length[100]');
-    $this->form_validation->set_rules('nama_brand','Nama Brand','trim|required|max_length[100]');
+    $this->form_validation->set_rules('brand_name','Nama Brand','trim|required|max_length[100]');
 
     if($this->form_validation->run() ==  TRUE)
     {
-      $kode_brand = $this->input->post('kode_brand' ,TRUE);
-      $nama_brand = $this->input->post('nama_brand' ,TRUE);
+      $brand_name = $this->input->post('brand_name' ,TRUE);
 
       $data = array(
-            'kode_brand' => $kode_brand,
-            'nama_brand' => $nama_brand
+            'brand_name' => $brand_name
       );
       $this->M_admin->insert('tb_brand',$data);
 
       $this->session->set_flashdata('msg_berhasil','Data Brand Berhasil Ditambahkan');
-      redirect(base_url('admin/form_brand'));
+      redirect(base_url('admin/tabel_brand'));
     }else {
       $this->load->view('admin/form_brand/form_insert');
     }
@@ -701,49 +992,32 @@ class Admin extends CI_Controller{
 
   public function proses_brand_update()
   {
-    $this->form_validation->set_rules('kode_item','Kode Jenis Item','trim|required|max_length[100]');
-    $this->form_validation->set_rules('jenis_item','Jenis Item','trim|required|max_length[100]');
+    $this->form_validation->set_rules('brand_name','Nama Brand','trim|required|max_length[100]');
 
     if($this->form_validation->run() ==  TRUE)
     {
-      $id_satuan   = $this->input->post('id_satuan' ,TRUE);
-      $kode_item = $this->input->post('kode_item' ,TRUE);
-      $jenis_item = $this->input->post('jenis_item' ,TRUE);
+      $id_brand   = $this->input->post('id_brand' ,TRUE);
+      $brand_name = $this->input->post('brand_name' ,TRUE);
 
       $where = array(
-            'id_item' => $id_item
+            'id_brand' => $id_brand
       );
 
       $data = array(
-            'kode_item' => $kode_item,
-            'jenis_item' => $jenis_item
+            'brand_name' => $brand_name
       );
       $this->M_admin->update('tb_brand',$data,$where);
 
       $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Di Update');
-      redirect(base_url('admin/tabel_jenisitem'));
+      redirect(base_url('admin/tabel_brand'));
     }else {
-      $this->load->view('admin/form_jenisitem/form_update');
+      $this->load->view('admin/form_brand/form_update');
     }
   }
 
   ####################################
             // END BRAND
   ####################################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   ####################################
@@ -779,6 +1053,8 @@ class Admin extends CI_Controller{
 
   public function form_po_number()
   {
+    $data['list_artcolor'] = $this->M_admin->select('tb_art_color');
+    $data['list_brand'] = $this->M_admin->select('tb_brand');
     $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
     $this->load->view('admin/form_po_number/form_insert',$data);
   }
@@ -793,8 +1069,10 @@ class Admin extends CI_Controller{
   public function update_po_number()
   {
     $uri = $this->uri->segment(3);
-    $where = array('po_number' => $uri);
-    $data['data_brand'] = $this->M_admin->get_data('tb_po_number',$where);
+    $where = array('id_po' => $uri);
+    $data['data_po_number'] = $this->M_admin->get_data('tb_po_number',$where);
+    $data['list_artcolor'] = $this->M_admin->select('tb_art_color');
+    $data['list_brand'] = $this->M_admin->select('tb_brand');
     $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
     $this->load->view('admin/form_po_number/form_update',$data);
   }
@@ -806,34 +1084,107 @@ class Admin extends CI_Controller{
     $this->M_admin->delete('tb_po_number',$where);
     redirect(base_url('admin/tabel_po_number'));
   }
+  public function add_po_item()
+  {
+    $uri = $this->uri->segment(3);
+    $where = array('id_po' => $uri);
+    $data['data_po_number'] = $this->M_admin->get_data('tb_po_number',$where);
+    $data['list_artcolor'] = $this->M_admin->select('tb_art_color');
+    $data['list_brand'] = $this->M_admin->select('tb_brand');
+    $data['list_item'] = $this->M_admin->select('tb_listcons');
+    $data['list_size'] = $this->M_admin->select('tb_size');
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/form_po_number/form_update',$data);
+  }
+
+  public function add_po_size()
+  {
+    $uri = $this->uri->segment(3);
+    $where = array('id_po' => $uri);
+    $data['data_po_number'] = $this->M_admin->get_data('tb_po_number',$where);
+    $data['list_artcolor'] = $this->M_admin->select('tb_art_color');
+    $data['list_brand'] = $this->M_admin->select('tb_brand');
+    $data['list_item'] = $this->M_admin->select('tb_listcons');
+    $data['list_size'] = $this->M_admin->select('tb_size');
+    $data['list_size_run'] = $this->M_admin->select('tb_size_run');
+    $data['avatar'] = $this->M_admin->get_data_gambar('tb_upload_gambar_user',$this->session->userdata('name'));
+    $this->load->view('admin/form_po_number/form_add_size',$data);
+  }
+
+  public function proses_po_size_insert()
+  {
+    $this->form_validation->set_rules('po_number','PO Number','trim|required|max_length[100]');
+    $this->form_validation->set_rules('brand_name','Nama Brand','trim|required|max_length[100]');
+    $this->form_validation->set_rules('artcolor_name','Art Color','trim|required|max_length[100]');
+    $this->form_validation->set_rules('xfd','Xfd','trim|required|max_length[100]');
+    $this->form_validation->set_rules('size_name','Size Run','trim|required|max_length[100]');
+    $this->form_validation->set_rules('size_run','QTY Size','trim|required|max_length[100]');
+    $this->form_validation->set_rules('qty_total','QTY Total','trim|required|max_length[100]');
+
+    if($this->form_validation->run() ==  TRUE)
+    {
+      $id_po   = $this->input->post('id_po' ,TRUE);
+      $po_number = $this->input->post('po_number' ,TRUE);
+      $brand_name = $this->input->post('brand_name' ,TRUE);
+      $artcolor_name = $this->input->post('artcolor_name' ,TRUE);
+      $xfd = $this->input->post('xfd' ,TRUE);
+      $qty_total = $this->input->post('qty_total' ,TRUE);
+      $size_name = $this->input->post('size_name' ,TRUE);
+      $size_run = $this->input->post('size_run' ,TRUE);
+
+      $data = array(
+            'id_po' => $id_po,
+            'po_number' => $po_number,
+            'brand_name' => $brand_name,
+            'artcolor_name' => $artcolor_name,
+            'xfd' => $xfd,
+            'qty_total' => $qty_total,
+      );
+
+      $data1 = array(
+            'po_number' => $po_number,
+            'size_name' => $size_name,
+            'size_run' => $size_run,
+            
+      );
+
+      $this->M_admin->update('tb_po_number',$data);
+      $this->M_admin->insert('tb_size_run',$data1);
+
+      $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Ditambahkan');
+      redirect(base_url('admin/form_po_number/form_add_size'));
+    }else {
+      $this->load->view('admin/form_po_number/form_insert');
+    }
+  }
 
   public function proses_po_number_insert()
   {
     $this->form_validation->set_rules('po_number','PO Number','trim|required|max_length[100]');
-    $this->form_validation->set_rules('brand','Nama Brand','trim|required|max_length[100]');
-    $this->form_validation->set_rules('art','Art','trim|required|max_length[100]');
-    $this->form_validation->set_rules('color','Color','trim|required|max_length[100]');
-    $this->form_validation->set_rules('qty_order','QTY','trim|required|max_length[100]');
+    $this->form_validation->set_rules('brand_name','Nama Brand','trim|required|max_length[100]');
+    $this->form_validation->set_rules('artcolor_name','Art Color','trim|required|max_length[100]');
+    $this->form_validation->set_rules('xfd','Xfd','trim|required|max_length[100]');
+    $this->form_validation->set_rules('qty_total','QTY Total','trim|max_length[100]');
 
     if($this->form_validation->run() ==  TRUE)
     {
       $po_number = $this->input->post('po_number' ,TRUE);
-      $brand = $this->input->post('brand' ,TRUE);
-      $art = $this->input->post('art' ,TRUE);
-      $color = $this->input->post('color' ,TRUE);
-      $qty_order = $this->input->post('qty_order' ,TRUE);
+      $brand_name = $this->input->post('brand_name' ,TRUE);
+      $artcolor_name = $this->input->post('artcolor_name' ,TRUE);
+      $xfd = $this->input->post('xfd' ,TRUE);
+      $qty_total = $this->input->post('qty_total' ,TRUE);
 
       $data = array(
             'po_number' => $po_number,
-            'brand' => $brand,
-            'art' => $art,
-            'color' => $color,
-            'qty_order' => $qty_order,
+            'brand_name' => $brand_name,
+            'artcolor_name' => $artcolor_name,
+            'xfd' => $xfd,
+            'qty_total' => $qty_total,
       );
       $this->M_admin->insert('tb_po_number',$data);
 
       $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Ditambahkan');
-      redirect(base_url('admin/form_po_number'));
+      redirect(base_url('admin/tabel_po_number'));
     }else {
       $this->load->view('admin/form_po_number/form_insert');
     }
@@ -841,34 +1192,43 @@ class Admin extends CI_Controller{
 
   public function proses_po_number_update()
   {
-    $this->form_validation->set_rules('kode_item','Kode Jenis Item','trim|required|max_length[100]');
-    $this->form_validation->set_rules('jenis_item','Jenis Item','trim|required|max_length[100]');
+    $this->form_validation->set_rules('po_number','PO Number','trim|required|max_length[100]');
+    $this->form_validation->set_rules('brand_name','Nama Brand','trim|required|max_length[100]');
+    $this->form_validation->set_rules('artcolor_name','Art & Color','trim|required|max_length[100]');
+    $this->form_validation->set_rules('xfd','Xfd','trim|required|max_length[100]');
+    $this->form_validation->set_rules('qty_total','QTY Total','trim|required|max_length[100]');
 
     if($this->form_validation->run() ==  TRUE)
     {
-      $id_satuan   = $this->input->post('id_satuan' ,TRUE);
-      $kode_item = $this->input->post('kode_item' ,TRUE);
-      $jenis_item = $this->input->post('jenis_item' ,TRUE);
+      $id_po   = $this->input->post('id_po' ,TRUE);
+      $po_number = $this->input->post('po_number' ,TRUE);
+      $brand_name = $this->input->post('brand_name' ,TRUE);
+      $artcolor_name = $this->input->post('artcolor_name' ,TRUE);
+      $xfd = $this->input->post('xfd' ,TRUE);
+      $qty_total = $this->input->post('qty_total' ,TRUE);
 
       $where = array(
-            'id_item' => $id_item
+            'id_po' => $id_po
       );
 
       $data = array(
-            'kode_item' => $kode_item,
-            'jenis_item' => $jenis_item
+            'po_number' => $po_number,
+            'brand_name' => $brand_name,
+            'artcolor_name' => $artcolor_name,
+            'xfd' => $xfd,
+            'qty_total' => $qty_total,
       );
-      $this->M_admin->update('tb_jenis_item',$data,$where);
+      $this->M_admin->update('tb_po_number',$data,$where);
 
       $this->session->set_flashdata('msg_berhasil','Data satuan Berhasil Di Update');
-      redirect(base_url('admin/tabel_jenisitem'));
+      redirect(base_url('admin/tabel_po_number'));
     }else {
-      $this->load->view('admin/form_jenisitem/form_update');
+      $this->load->view('admin/form_po_number/form_update');
     }
   }
 
   ####################################
-            // END JENIS ITEM
+            // END PO NUMBER
   ####################################
 
 

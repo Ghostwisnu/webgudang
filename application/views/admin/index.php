@@ -201,20 +201,6 @@
         </li> -->
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-edit"></i> <span>Forms</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="<?php echo base_url('admin/form_barangmasuk')?>"><i class="fa fa-download"></i> Tambah Data Barang Masuk</a></li>
-            <li><a href="<?php echo base_url('admin/form_satuan')?>"><i class="fa fa-circle-o"></i> Tambah Satuan Barang</a></li>
-            <li ><a href="<?= base_url('admin/form_jenisitem')?>"><i class="fa fa-circle-o"></i> Tambah Jenis Item</a></li>
-            <li ><a href="<?= base_url('admin/form_po_number')?>"><i class="fa fa-circle-o"></i> Tambah PO</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
             <i class="fa fa-table"></i> <span>Tables</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -222,9 +208,10 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="<?= base_url('admin/tabel_barangmasuk') ?>"><i class="fa fa-circle-o"></i> Tabel Barang Masuk</a></li>
-            <li><a href="<?= base_url('admin/tabel_barangkeluar')?>"><i class="fa fa-circle-o"></i> Tabel Barang Keluar</a></li>
             <li><a href="<?= base_url('admin/tabel_satuan')?>"><i class="fa fa-circle-o"></i> Tabel Unit</a></li>
-            <li><a href="<?= base_url('admin/tabel_art')?>"><i class="fa fa-circle-o"></i> Tabel Art&Color</a></li>
+            <li><a href="<?= base_url('admin/tabel_art')?>"><i class="fa fa-circle-o"></i> Tabel Art</a></li>
+            <li><a href="<?= base_url('admin/tabel_color')?>"><i class="fa fa-circle-o"></i> Tabel Color</a></li>
+            <li><a href="<?= base_url('admin/tabel_art_color')?>"><i class="fa fa-circle-o"></i> Tabel Art & Color</a></li>
             <li><a href="<?= base_url('admin/tabel_jenisitem')?>"><i class="fa fa-circle-o"></i> Tabel Jenis Item</a></li>
             <li><a href="<?= base_url('admin/tabel_po_number')?>"><i class="fa fa-circle-o"></i> Tabel PO Number</a></li>
           </ul>

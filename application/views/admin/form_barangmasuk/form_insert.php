@@ -128,20 +128,6 @@
           </ul> -->
         </li>
 
-        <li class="treeview active">
-          <a href="#">
-            <i class="fa fa-edit"></i> <span>Forms</span>
-            <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-          </a>
-          <ul class="treeview-menu">
-            <li ><a href="<?= base_url('admin/form_barangmasuk')?>"><i class="fa fa-download"></i> Tambah Data Barang Masuk</a></li>
-            <li ><a href="<?= base_url('admin/form_satuan')?>"><i class="fa fa-circle-o"></i> Tambah Satuan Barang</a></li>
-            <li ><a href="<?= base_url('admin/form_jenisitem')?>"><i class="fa fa-circle-o"></i> Tambah Jenis Item</a></li>
-            <li ><a href="<?= base_url('admin/form_po_number')?>"><i class="fa fa-circle-o"></i> Tambah PO</a></li>
-          </ul>
-        </li>
         <li class="treeview ">
           <a href="#">
             <i class="fa fa-table"></i> <span>Tables</span>
@@ -150,10 +136,13 @@
                 </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="<?= base_url('admin/tabel_barangmasuk')?>"><i class="fa fa-circle-o"></i> Tabel Barang Masuk</a></li>
-            <li><a href="<?= base_url('admin/tabel_barangkeluar')?>"><i class="fa fa-circle-o"></i> Tabel Barang Keluar</a></li>
-            <li><a href="<?= base_url('admin/tabel_satuan')?>"><i class="fa fa-circle-o"></i> Tabel Satuan</a></li>
-            <li><a href="<?= base_url('admin/tabel_jenisitem')?>"><i class="fa fa-circle-o"></i> Tabel Jenis Item</a></li>
+            <li class="active"><a href="<?= base_url('admin/tabel_barangmasuk')?>"><i class="fa fa-circle-o"></i> Tabel Barang Masuk</a></li>
+            <li><a href="<?= base_url('admin/tabel_satuan')?>"><i class="fa fa-circle-o"></i> Tabel Unit</a></li>
+            <li><a href="<?= base_url('admin/tabel_art')?>"><i class="fa fa-circle-o"></i> Tabel Art</a></li>
+            <li><a href="<?= base_url('admin/tabel_color')?>"><i class="fa fa-circle-o"></i> Tabel color</a></li>
+            <li><a href="<?= base_url('admin/tabel_brand')?>"><i class="fa fa-circle-o"></i> Tabel Brand</a></li>
+            <li><a href="<?= base_url('admin/tabel_art_color')?>"><i class="fa fa-circle-o"></i> Tabel Art & Color</a></li>
+            <li ><a href="<?= base_url('admin/tabel_jenisitem')?>"><i class="fa fa-circle-o"></i> Tabel Jenis Item</a></li>
             <li><a href="<?= base_url('admin/tabel_po_number')?>"><i class="fa fa-circle-o"></i> Tabel PO</a></li>
           </ul>
         </li>
@@ -218,89 +207,36 @@
 
             <form method="post" action="">
               <div class="box-body">
-                <div class="form-group">
-                  <label for="id_transaksi" style="margin-left:220px;display:inline;">ID Transaksi</label>
-                  <input type="text" name="id_transaksi" style="margin-left:37px;width:20%;display:inline;" class="form-control" readonly="readonly" value="WG-<?=date("Y");?><?=random_string('numeric', 8);?>">
-                </div>
-                <div class="form-group">
-                  <label for="tanggal" style="margin-left:220px;display:inline;">Tanggal</label>
-                  <input type="text" name="tanggal" style="margin-left:66px;width:20%;display:inline;" class="form-control form_datetime" placeholder="Klik Disini" required>
-                </div>
-                <div class="form-group">
-                  <label for="lokasi" style="margin-left:220px;display:inline;">Lokasi</label>
-                  <input type="text" name="lokasi" style="width:20%;  margin-left: 72px; display:inline;" class="form-control" id="lokasi" value="WAREHOUSE" readonly>
-                </div>
-                <div class="form-group" style="margin-bottom:40px;">
-                  <label for="brand" style="margin-left:220px;display:inline;">Brand</label>
-                  <select class="form-control" name="brand" style="margin-left:75px;width:20%;display:inline;" required>
-                    <option value="">-- Pilih Brand --</option>
-                    <option value="ROSSI">Rossi</option>
-                    <option value="BLACKSTONE">Blackstone</option>
-                    <option value="ARIAT">Ariat</option>
-                  </select>
-                </div>
-                
-                <div class="form-group" style="display:inline-block;">
-                  <label for="po_number" style="width:87%;margin-left: 0px;">PO Number</label>
-                  <select class="form-control" name="po_number" style="width:110%;margin-right: 18px;" required>
+                <div class="form-group" style="display:inline-block;gap: 10px;">
+                  <label for="art_name" style="width:87%;margin-left: 0px; gap: 10px;">Nama Art & Color</label>
+                  <select class="form-control" name="artcolor_name" style="width:110%;margin-right: 18px;gap: 10px" required>
                     <option value="" selected="">-- Pilih --</option>
-                    <?php foreach($list_po_number as $p){ ?>
-                    <option value="<?=$p->po_number?>"><?=$p->po_number?></option>
+                    <?php foreach($list_artcolor as $p){ ?>
+                    <option value="<?=$p->artcolor_name?>"><?=$p->artcolor_name?></option>
                     <?php } ?>
                   </select>
-                </div>
-                <div class="form-group" style="display:inline-block;">
-                  <label for="art" style="width:87%;margin-left: 35px;">Art</label>
-                  <select class="form-control" name="art" style="width:110%;margin-right: 20px; margin-left: 35px;" required>
-                    <option value="" selected="">-- Pilih --</option>
-                    <?php foreach($list_art as $a){ ?>
-                    <option value="<?=$a->art?>"><?=$a->art?></option>
+                  <label for="color_name" style="width:87%;margin-left: 0px; gap: 10px;">Nama Item</label>
+                  <select class="form-control" name="item_name" style="width:110%;margin-right: 18px;gap: 10px" required>
+                    <option value="" selected="">-- Pilih --</option> 
+                    <?php foreach($list_item as $p){ ?>
+                    <option value="<?=$p->item_name?>"><?=$p->item_name?></option> 
                     <?php } ?>
                   </select>
-                </div>
-                </form>
-                <div class="form-group" style="display:inline-block;">
-                  <label for="color" style="width:87%;margin-left: 60px;">Color</label>
-                  <select class="form-control" name="color" style="width:110%;margin-right: 20px; margin-left: 60px;" required>
-                    <option value="" selected="">-- Pilih --</option>
-                    <?php foreach($list_color as $c){ ?>
-                    <option value="<?=$c->color?>"><?=$c->color?></option>
+                  <label for="color_name" style="width:87%;margin-left: 0px; gap: 10px;">Nama Unit</label>
+                  <select class="form-control" name="unit_name" style="width:110%;margin-right: 18px;gap: 10px" required>
+                    <option value="" selected="">-- Pilih --</option> 
+                    <?php foreach($list_item as $p){ ?>
+                    <option value="<?=$p->unit_name?>"><?=$p->unit_name?></option> 
                     <?php } ?>
                   </select>
+                  <label for="cons_rate" style="width:73%;">Cons</label>
+                  <input type="text" name="cons_rate" style="width:90%;margin-right: 67px;" class="form-control" id="cons_rate" placeholder="Cons" required>
                 </div>
-                <div class="form-group" style="display:inline-block;">
-                  <label for="jenis_item" style="width:50%; margin-left: 90px;">Jenis Item</label>
-                  <select class="form-control" name="jenis_item" style="width:80%;margin-right: 18px; margin-left: 90px;" required>
-                    <option value="" selected="">-- Pilih --</option>
-                    <?php foreach($list_jenisitem as $j){ ?>
-                    <option value="<?=$j->kode_item?>"><?=$j->jenis_item?></option>
-                    <?php } ?>
-                  </select>
-                </div>
-                <div class="form-group" style="display:inline-block;">
-                  <label for="kode_barang" style="width:87%;margin-left: 70px;">Kode Material</label>
-                  <input type="text" name="kode_barang" style="width: 50%;margin-right: 67px;margin-left: 70px;" class="form-control" id="kode_barang" placeholder="Kode Material" required>
-                </div>
-                
-                <div class="form-group" style="display:inline-block;">
-                  <label for="nama_Barang" style="width:73%;">Nama Barang</label>
-                  <input type="text" name="nama_barang" style="width:90%;margin-right: 67px;" class="form-control" id="nama_Barang" placeholder="Nama Barang" required>
-              </div>
-              <div class="form-group" style="display:inline-block;">
-                  <label for="satuan" style="width:73%;">Satuan</label>
-                  <select class="form-control" name="satuan" style="width:110%;margin-right: 18px;" required>
-                    <option value="" selected="">-- Pilih --</option>
-                    <?php foreach($list_satuan as $s){ ?>
-                    <option value="<?=$s->kode_satuan?>"><?=$s->nama_satuan?></option>
-                    <?php } ?>
-                  </select>
-              </div>
-              <div class="form-group" style="display:inline-block;">
-                <label for="jumlah" style="width:73%;margin-left:33px;">Jumlah</label>
-                <input type="number" name="jumlah" style="width:41%;margin-left:34px;margin-right:18px;" class="form-control" id="jumlah" required>
-            </div>
+              </div>  
+              
+
             <div class="form-group" style="display:inline-block;">
-              <button type="reset" class="btn btn-basic" name="btn_reset" style="width:95px;margin-left:-70px;"><i class="fa fa-eraser" aria-hidden="true"></i> Reset</button>
+              <button type="reset" class="btn btn-basic" name="btn_reset" style="width:80px;margin-left:10px;"><i class="fa fa-eraser" aria-hidden="true"></i> Reset</button>
             </div>
               <!-- /.box-body -->
               <div class="box-footer" style="width:93%;">

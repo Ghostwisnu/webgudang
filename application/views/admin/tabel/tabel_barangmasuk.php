@@ -150,9 +150,13 @@
                 </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="<?= base_url('admin/tabel_barangmasuk')?>"><i class="fa fa-circle-o"></i> Tabel Barang Masuk</a></li>
-            <li><a href="<?= base_url('admin/tabel_barangkeluar')?>"><i class="fa fa-circle-o"></i> Tabel Barang Keluar</a></li>
-            <li><a href="<?= base_url('admin/tabel_satuan')?>"><i class="fa fa-circle-o"></i> Tabel Satuan</a></li>
+            <li class="active"><a href="<?= base_url('admin/tabel_barangmasuk')?>"><i class="fa fa-circle-o"></i> Tabel Barang Masuk</a></li>
+            <li><a href="<?= base_url('admin/tabel_satuan')?>"><i class="fa fa-circle-o"></i> Tabel Unit</a></li>
+            <li><a href="<?= base_url('admin/tabel_art')?>"><i class="fa fa-circle-o"></i> Tabel Art</a></li>
+            <li ><a href="<?= base_url('admin/tabel_color')?>"><i class="fa fa-circle-o"></i> Tabel color</a></li>
+            <li><a href="<?= base_url('admin/tabel_brand')?>"><i class="fa fa-circle-o"></i> Tabel Brand</a></li>
+            <li><a href="<?= base_url('admin/tabel_size')?>"><i class="fa fa-circle-o"></i> Tabel size</a></li>
+            <li><a href="<?= base_url('admin/tabel_art_color')?>"><i class="fa fa-circle-o"></i> Tabel Art & Color</a></li>
             <li><a href="<?= base_url('admin/tabel_jenisitem')?>"><i class="fa fa-circle-o"></i> Tabel Jenis Item</a></li>
             <li><a href="<?= base_url('admin/tabel_po')?>"><i class="fa fa-circle-o"></i> Tabel PO</a></li>
           </ul>
@@ -217,17 +221,12 @@
                 <thead>
                 <tr>
                   <th>No</th>
-                  <th>Brand</th>
-                  <th>Tanggal Masuk</th>
-                  <th>PO Number</th>
-                  <th>Color</th>
-                  <th>Kode Barang</th>
-                  <th>Nama Barang</th>
-                  <th>Satuan</th>
-                  <th>Jumlah</th>
+                  <th>Art & Color</th>
+                  <th>Nama Item</th>
+                  <th>Unit Item</th>
+                  <th>Consumption</th>
                   <th>Update</th>
                   <th>Delete</th>
-                  <th>Keluarkan</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -236,17 +235,12 @@
                   <?php $no = 1;?>
                   <?php foreach($list_data as $dd): ?>
                     <td><?=$no?></td>
-                    <td><?=$dd->brand?></td>
-                    <td><?=$dd->tanggal?></td>
-                    <td><?=$dd->po_number?></td>
-                    <td><?=$dd->color?></td>
-                    <td><?=$dd->kode_barang?></td>
-                    <td><?=$dd->nama_barang?></td>
-                    <td><?=$dd->satuan?></td>
-                    <td><?=$dd->jumlah?></td>
-                    <td><a type="button" class="btn btn-info"  href="<?=base_url('admin/update_barang/'.$dd->id_transaksi)?>" name="btn_update" style="margin:auto;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-                    <td><a type="button" class="btn btn-danger btn-delete"  href="<?=base_url('admin/delete_barang/'.$dd->id_transaksi)?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                    <td><a type="button" class="btn btn-success btn-barangkeluar"  href="<?=base_url('admin/barang_keluar/'.$dd->id_transaksi)?>" name="btn_barangkeluar" style="margin:auto;"><i class="fa fa-sign-out" aria-hidden="true"></i></a></td>
+                    <td><?=$dd->artcolor_name?></td>
+                    <td><?=$dd->item_name?></td>
+                    <td><?=$dd->unit_name?></td>
+                    <td><?=$dd->cons_rate?></td>
+                    <td><a type="button" class="btn btn-info"  href="<?=base_url('admin/update_barang/'.$dd->id_cons)?>" name="btn_update" style="margin:auto;"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                    <td><a type="button" class="btn btn-danger btn-delete"  href="<?=base_url('admin/delete_barang/'.$dd->id_cons)?>" name="btn_delete" style="margin:auto;"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                 </tr>
               <?php $no++; ?>
               <?php endforeach;?>
@@ -254,7 +248,15 @@
                     <td colspan="7" align="center"><strong>Data Kosong</strong></td>
               <?php } ?>
                 </tbody>
-                
+                <tfoot>
+                <tr>
+                  <th>No</th>
+                  <th>Art & Color</th>
+                  <th>Nama Item</th>
+                  <th>Unit Item</th>
+                  <th>Consumption</th>
+                </tr>
+                </tfoot>
               </table>
             </div>
             <!-- /.box-body -->

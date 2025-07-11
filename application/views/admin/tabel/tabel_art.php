@@ -128,20 +128,6 @@
           </ul> -->
         </li>
 
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-edit"></i> <span>Forms</span>
-            <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="<?= base_url('admin/form_barangmasuk')?>"><i class="fa fa-circle-o"></i> Tambah Data Barang Masuk</a></li>
-            <li><a href="<?= base_url('admin/form_satuan')?>"><i class="fa fa-circle-o"></i> Tambah Satuan Barang</a></li>
-            <li><a href="<?= base_url('admin/form_jenisitem')?>"><i class="fa fa-circle-o"></i> Tambah Jenis Item</a></li>
-            <li><a href="<?= base_url('admin/form_po_number')?>"><i class="fa fa-circle-o"></i> Tambah PO</a></li>
-          </ul>
-        </li>
         <li class="treeview active">
           <a href="#">
             <i class="fa fa-table"></i> <span>Tables</span>
@@ -151,10 +137,12 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="<?= base_url('admin/tabel_barangmasuk')?>"><i class="fa fa-circle-o"></i> Tabel Barang Masuk</a></li>
-            <li><a href="<?= base_url('admin/tabel_barangkeluar')?>"><i class="fa fa-circle-o"></i> Tabel Barang Keluar</a></li>
             <li><a href="<?= base_url('admin/tabel_satuan')?>"><i class="fa fa-circle-o"></i> Tabel Unit</a></li>
             <li class="active"><a href="<?= base_url('admin/tabel_art')?>"><i class="fa fa-circle-o"></i> Tabel Art</a></li>
             <li><a href="<?= base_url('admin/tabel_color')?>"><i class="fa fa-circle-o"></i> Tabel color</a></li>
+            <li><a href="<?= base_url('admin/tabel_brand')?>"><i class="fa fa-circle-o"></i> Tabel Brand</a></li>
+            <li><a href="<?= base_url('admin/tabel_size')?>"><i class="fa fa-circle-o"></i> Tabel size</a></li>
+            <li><a href="<?= base_url('admin/tabel_art_color')?>"><i class="fa fa-circle-o"></i> Tabel Art & color</a></li>
             <li ><a href="<?= base_url('admin/tabel_jenisitem')?>"><i class="fa fa-circle-o"></i> Tabel Jenis Item</a></li>
             <li ><a href="<?= base_url('admin/tabel_po_number')?>"><i class="fa fa-circle-o"></i> Tabel PO</a></li>
           </ul>
@@ -179,12 +167,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Tabel Art&Color
+        Tabel Art
       </h1>
       <ol class="breadcrumb">
         <li><a href="<?=base_url('admin')?>"><i class="fa fa-dashboard"></i> Home</a></li>
         <li>Tables</li>
-        <li class="active"><a href="<?=base_url('admin/tabel_art_color')?>">Tabel Art&Color</a></li>
+        <li class="active"><a href="<?=base_url('admin/tabel_art_color')?>">Tabel Art</a></li>
       </ol>
     </section>
 
@@ -196,7 +184,7 @@
           <!-- /.box -->
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title"><i class="fa fa-table" aria-hidden="true"></i> List Art&Color</h3>
+              <h3 class="box-title"><i class="fa fa-table" aria-hidden="true"></i> List Art</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
